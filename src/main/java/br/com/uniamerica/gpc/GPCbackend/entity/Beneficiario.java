@@ -3,9 +3,7 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 
 //------------------Imports----------------------
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +14,8 @@ public class Beneficiario extends Pessoa {
 
     @Getter
     @Setter
-    @Column(name = "responsavel", nullable = false)
+    @OneToMany
+    @JoinColumn(name = "responsavel_id",nullable = false)
     private Responsavel responsavel;
 
 

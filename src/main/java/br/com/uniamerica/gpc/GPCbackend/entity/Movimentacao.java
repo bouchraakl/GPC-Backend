@@ -3,9 +3,7 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 
 //------------------Imports----------------------
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,12 +31,14 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "beneficiario", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "beneficiario_id",nullable = false)
     private Beneficiario beneficiario;
 
     @Getter
     @Setter
-    @Column(name = "ativo", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "ativo_id",nullable = false)
     private Ativo ativo;
 
     @Getter
@@ -48,7 +48,8 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "responsavel", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "responsavel_id",nullable = false)
     private Responsavel responsavel;
 
     @Getter
