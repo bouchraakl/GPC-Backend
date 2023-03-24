@@ -1,19 +1,54 @@
+//------------------Package----------------------
 package br.com.uniamerica.gpc.GPCbackend.entity;
 
+//------------------Imports----------------------
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Data
+//------------------------------------------------
+@Entity
+@Table(name = "pessoas",schema = "public")
 public class Pessoa extends AbstractClass {
 
+    @Getter
+    @Setter
+    @Column(name = "nome",nullable = false,length = 50)
     private String nome;
-    private String email;
-    private String telefone;
-    private LocalDate dataNascimento;
-    private String RG;
-    private String CPF;
 
+    @Getter
+    @Setter
+    @Column(name = "email" , length = 50)
+    private String email;
+
+    @Getter
+    @Setter
+    @Column(name = "telefone" , length = 20)
+    private String telefone;
+
+    @Getter
+    @Setter
+    @Column(name = "dt_nascimento" , length = 50)
+    private LocalDate dataNascimento;
+
+    @Getter
+    @Setter
+    @Column(name = "rg" , length = 10,unique = true)
+    private String rg;
+
+    @Getter
+    @Setter
+    @Column(name = "cpf" , length = 14,nullable = false,unique = true)
+    private String cpf;
+
+    @Getter
+    @Setter
+    @Column(name = "endereco" , nullable = false)
     private Endereco endereco;
 
 }

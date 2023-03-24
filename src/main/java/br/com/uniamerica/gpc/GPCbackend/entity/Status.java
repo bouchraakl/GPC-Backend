@@ -1,7 +1,12 @@
+//------------------Package----------------------
 package br.com.uniamerica.gpc.GPCbackend.entity;
 
+//------------------------------------------------
 public enum Status {
 
-    EM_USO, DISPONIVEL, INUTILIZAVEL, EM_MANUTENCAO;
+    Em_uso,
+    Disponivel,
+    Inutilizavel,
+    Em_manutencao
 
 }
