@@ -2,6 +2,7 @@
 package br.com.uniamerica.gpc.GPCbackend.entity;
 
 //------------------Imports----------------------
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +13,12 @@ import java.time.LocalDateTime;
 //------------------------------------------------
 @Entity
 @Table(name = "ativos", schema = "public")
-public class Ativo extends AbstractClass {
+public class Ativo extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "categoria", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
     @Getter
@@ -51,9 +53,5 @@ public class Ativo extends AbstractClass {
     @Column(name = "arquivo")
     private File arquivo;
 
-    @PrePersist
-    private void prePersist() {
-        this.dataEntrada = LocalDateTime.now(); //perguntar pra eles se vai precisar pegar o status do patrimonio.
-    }
 
 }

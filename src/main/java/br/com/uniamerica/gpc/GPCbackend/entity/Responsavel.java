@@ -9,6 +9,6 @@ import jakarta.persistence.Table;
 //------------------------------------------------
 @Entity
 @Table(name = "responsavel",schema = "public")
-public class Responsavel extends AbstractClass {
+public class Responsavel extends AbstractEntity {
 
 }

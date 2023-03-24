@@ -11,25 +11,29 @@ import java.time.LocalDateTime;
 
 //------------------------------------------------
 @MappedSuperclass
-public abstract class AbstractClass {
+public abstract class AbstractEntity {
 
     @Id
     @Getter
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
+
     @Getter
     @Setter
     @Column(name = "suspenso", nullable = false)
     private boolean isSuspenso;
+
     @Getter
     @Setter
     @Column(name = "editor", nullable = false)
     private Usuario editor;
+
     @Getter
     @Setter
     @Column(name = "dt_edicao", nullable = false)
     private LocalDateTime dataEdicao;
+
     @Getter
     @Setter
     @Column(name = "dt_criacao", nullable = false)

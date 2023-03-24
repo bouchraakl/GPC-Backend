@@ -12,7 +12,7 @@ import lombok.Setter;
 //------------------------------------------------
 @Entity
 @Table(name = "enderecos", schema = "public")
-public class Endereco extends AbstractClass {
+public class Endereco extends AbstractEntity {
 
     @Getter
     @Setter

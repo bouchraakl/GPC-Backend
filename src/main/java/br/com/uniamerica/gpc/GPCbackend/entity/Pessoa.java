@@ -2,10 +2,7 @@
 package br.com.uniamerica.gpc.GPCbackend.entity;
 
 //------------------Imports----------------------
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +11,7 @@ import java.time.LocalDate;
 //------------------------------------------------
 @Entity
 @Table(name = "pessoas",schema = "public")
-public class Pessoa extends AbstractClass {
+public class Pessoa extends AbstractEntity {
 
     @Getter
     @Setter
@@ -48,7 +45,8 @@ public class Pessoa extends AbstractClass {
 
     @Getter
     @Setter
-    @Column(name = "endereco" , nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id",nullable = false)
     private Endereco endereco;
 
 }

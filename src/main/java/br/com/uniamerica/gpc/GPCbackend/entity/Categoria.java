@@ -3,9 +3,7 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 
 //------------------Imports----------------------
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +12,7 @@ import java.util.List;
 //------------------------------------------------
 @Entity
 @Table(name = "categorias", schema = "public")
-public class Categoria extends AbstractClass {
+public class Categoria extends AbstractEntity {
 
     @Getter
     @Setter
@@ -23,7 +21,10 @@ public class Categoria extends AbstractClass {
 
     @Getter
     @Setter
-    @Column(name = "lista_de_espera")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "categoria_beneficiario",
+            joinColumns = @JoinColumn(name = "categoria_id"),
+            inverseJoinColumns = @JoinColumn(name = "beneficiario_id"))
     private List<Beneficiario> listaEspera;
 
     @Getter
