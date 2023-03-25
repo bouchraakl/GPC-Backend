@@ -48,12 +48,6 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "responsavel_id",nullable = false)
-    private Responsavel responsavel;
-
-    @Getter
-    @Setter
     @Column(name = "arquivos")
     private File arquivo;
 

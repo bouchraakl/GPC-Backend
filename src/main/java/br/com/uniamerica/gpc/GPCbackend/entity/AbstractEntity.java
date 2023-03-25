@@ -16,18 +16,13 @@ public abstract class AbstractEntity {
     @Id
     @Getter
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private Long id;
 
     @Getter
     @Setter
-    @Column(name = "suspenso", nullable = false)
+    @Column(name = "is_suspenso", nullable = false)
     private boolean isSuspenso;
-
-    @Getter
-    @Setter
-    @Column(name = "editor", nullable = false)
-    private Usuario editor;
 
     @Getter
     @Setter

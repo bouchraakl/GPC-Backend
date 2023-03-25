@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.File;
 import java.time.LocalDateTime;
 
 //------------------------------------------------
@@ -18,12 +17,12 @@ public class Ativo extends AbstractEntity {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoria_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Categoria categoria;
 
     @Getter
     @Setter
-    @Column(name = "id_patrimonio", nullable = false, unique = true)
+    @Column(name = "cod_patrimonio", nullable = false, unique = true, length = 10)
     private String idPatrimonio;
 
     @Getter
@@ -40,18 +39,11 @@ public class Ativo extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "descricao", length = 150)
+    @Column(length = 150)
     private String descricao;
 
     @Getter
     @Setter
-    @Column(name = "dt_entrada", nullable = false, unique = true)
+    @Column(name = "dt_entrada", nullable = false)
     private LocalDateTime dataEntrada;
-
-    @Getter
-    @Setter
-    @Column(name = "arquivo")
-    private File arquivo;
-
-
 }
