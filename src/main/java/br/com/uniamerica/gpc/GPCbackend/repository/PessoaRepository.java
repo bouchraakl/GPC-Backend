@@ -12,11 +12,12 @@ import java.util.List;
 
 public interface PessoaRepository extends JpaRepository <Pessoa, Long> {
     @Query("from Pessoa where nome like :nome")
-    public List<Pessoa> findByNomeLike(@Param("nome") final String nome);
+    public List<Pessoa> findByNome(@Param("nome") final String nome);
 
     @Query("from Pessoa where cpf like :cpf")
-    public List<Pessoa> findByCpfLike(@Param("cpf") final String cpf);
+    public List<Pessoa> findByCpf(@Param("cpf") final String cpf);
 
-
+    @Query("from Pessoa where endereco.cep like :cep")
+    public List<Pessoa> findByCep(@Param("cep") final String cep);
 
 }

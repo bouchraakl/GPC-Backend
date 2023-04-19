@@ -17,4 +17,10 @@ public interface AtivoRepository extends JpaRepository <Ativo, Long> {
     @Query("from Ativo where Ativo.categoria.nomeCategoria like :nomeCategoria")
     public List<Ativo> findByCategoria(@Param("nomeCategoria") String nomeCategoria);
 
+    /* Param:
+    * True: Retorna todos os ativos que não estão suspensos
+    * False: Retorna todos os ativos que estão suspensos
+    */
+    @Query("from Ativo where Ativo.isSuspenso = :isSuspenso")
+    public List<Ativo> findAllBySuspenso(@Param("isSuspenso") boolean isSuspenso);
 }
