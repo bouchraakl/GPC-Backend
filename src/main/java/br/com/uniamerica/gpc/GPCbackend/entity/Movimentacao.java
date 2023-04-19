@@ -13,7 +13,7 @@ import java.time.LocalDate;
 //------------------------------------------------
 @Entity
 @Table(name = "movimentacoes", schema = "public")
-public class Movimentacao extends AbstractEntity {
+public class    Movimentacao extends AbstractEntity {
     @Getter
     @Setter
     @Column(name = "dt_emprestimo", nullable = false)
