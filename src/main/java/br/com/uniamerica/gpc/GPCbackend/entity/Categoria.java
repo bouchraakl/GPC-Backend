@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 //------------------------------------------------
@@ -27,11 +28,11 @@ public class Categoria extends AbstractEntity {
     private List<Beneficiario> listaEspera = new ArrayList<>();
 
     /*
-    * BI-DIRECIONAMENTO
-    * */
+     * BI-DIRECIONAMENTO
+     */
     @Getter @Setter
-    @OneToMany(mappedBy = "categoria")
-    private List<Ativo> ativos = new ArrayList<>();
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Ativo> ativos = new LinkedList<>();
 
     @Getter @Setter
     @Column(name = "max_amarelo", nullable = false)

@@ -34,10 +34,6 @@ public abstract class AbstractEntity {
     @Column(name = "dt_criacao", nullable = false)
     private LocalDateTime dataCriacao;
 
-    /*
-     * Ver com o pessoal se é pra salvar quem editou
-     * e ver com o professor como que faria pra salvar
-     */
     @PrePersist
     private void prePersist() {
         this.dataCriacao = LocalDateTime.now();
