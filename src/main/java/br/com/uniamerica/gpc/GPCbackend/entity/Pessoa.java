@@ -46,7 +46,7 @@ public class Pessoa extends AbstractEntity {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name="endereco_id" ,nullable = false)
     private Endereco endereco;
 
 }

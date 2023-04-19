@@ -12,7 +12,8 @@ import lombok.Setter;
 @Table(name = "usuarios", schema = "public")
 public class Usuario extends AbstractEntity {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Pessoa perfil;

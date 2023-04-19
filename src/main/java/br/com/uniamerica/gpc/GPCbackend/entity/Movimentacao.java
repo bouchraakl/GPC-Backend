@@ -31,14 +31,14 @@ public class    Movimentacao extends AbstractEntity {
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "beneficiario_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "beneficiario_id", nullable = false)
     private Beneficiario beneficiario;
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "ativo_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ativo_id", nullable = false)
     private Ativo ativo;
 
     @Getter
