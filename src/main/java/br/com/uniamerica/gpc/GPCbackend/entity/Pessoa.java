@@ -49,4 +49,10 @@ public class Pessoa extends AbstractEntity {
     @JoinColumn(name="endereco_id" ,nullable = false)
     private Endereco endereco;
 
+
+
+
+
+
+
 }
