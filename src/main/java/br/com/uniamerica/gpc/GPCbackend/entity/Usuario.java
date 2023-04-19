@@ -14,8 +14,8 @@ public class Usuario extends AbstractEntity {
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @OneToOne
+    @JoinColumn(nullable = false,unique = true)
     private Pessoa perfil;
 
     @Getter
