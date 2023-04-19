@@ -12,8 +12,7 @@ import lombok.Setter;
 @Table(name = "usuarios", schema = "public")
 public class Usuario extends AbstractEntity {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     @OneToOne
     @JoinColumn(nullable = false,unique = true)
     private Pessoa perfil;
