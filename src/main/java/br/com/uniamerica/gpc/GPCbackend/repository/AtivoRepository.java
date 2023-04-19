@@ -13,10 +13,8 @@ import java.util.List;
 @Repository
 public interface AtivoRepository extends JpaRepository <Ativo, Long> {
     @Query("from Ativo where idPatrimonio like :idPatrimonio")
-    public List<Ativo> findByAtivo(@Param("idPatrimonio") final String idPatrimonio);
-
-    /* Query para buscar o ativo atraves do nome da categoria*/
-    @Query("select ativo from Ativo ativo join ativo.categoria categoria where categoria.nomeCategoria = :nomeCategoria")
+    public List<Ativo> findByAtivo(@Param("idPatrimonio") String idPatrimonio);
+    @Query("from Ativo where Ativo.categoria.nomeCategoria like :nomeCategoria")
     public List<Ativo> findByCategoria(@Param("nomeCategoria") String nomeCategoria);
 
 }

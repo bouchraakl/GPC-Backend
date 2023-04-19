@@ -11,6 +11,8 @@ import java.util.List;
 
 @Repository
 public interface BeneficiarioRepository extends JpaRepository <Beneficiario, Long> {
-    @Query("select beneficiario from Beneficiario beneficiario join beneficiario.perfil perfil where perfil.nome = :nome")
+    @Query("from Beneficiario where Beneficiario.perfil.nome like :nome")
     public List<Beneficiario> findByNome(@Param("nome") String nome);
+    @Query("from Beneficiario where Beneficiario.perfil.cpf like :cpf")
+    public List<Beneficiario> findByCpf(@Param("cpf") String cpf);
 }
