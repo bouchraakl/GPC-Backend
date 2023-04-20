@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-
 public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Long> {
     @Query("from Movimentacao where Movimentacao.beneficiario.perfil.nome like :nome")
     public List<Movimentacao> findByMovimentacao(@Param("nome") String nome);

@@ -28,12 +28,12 @@ public class Categoria extends AbstractEntity {
     @JoinTable(name = "categoria_beneficiario",
             joinColumns = @JoinColumn(name = "categoria_id"),
             inverseJoinColumns = @JoinColumn(name = "beneficiario_id"))
-    private List<Beneficiario> listaEspera = new ArrayList<>();
+    private List<Beneficiario> listaEspera;
 
     @Getter
     @Setter
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Ativo> ativos = new LinkedList<>();
+    private List<Ativo> ativos;
 
     @Getter
     @Setter
