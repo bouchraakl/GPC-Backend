@@ -11,9 +11,12 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository <Usuario, Long> {
-    @Query("from Usuario where Usuario.perfil.nome like :nome")
+
+    @Query("from Usuario usuario join usuario.perfil perfil where perfil.nome like :nome")
     public List<Usuario> findByNome(@Param("nome") String nome);
-    @Query(value = "from Usuario  where Usuario.perfil.cpf like :cpf")
+
+    @Query("from Usuario usuario join usuario.perfil perfil where perfil.cpf like :cpf")
     public List<Usuario> findByCpf(@Param("cpf") String cpf);
+
 
 }
