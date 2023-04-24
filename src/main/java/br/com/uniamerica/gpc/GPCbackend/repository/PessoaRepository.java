@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-
 public interface PessoaRepository extends JpaRepository <Pessoa, Long> {
     @Query("from Pessoa where nome like :nome")
     public List<Pessoa> findByNome(@Param("nome") final String nome);

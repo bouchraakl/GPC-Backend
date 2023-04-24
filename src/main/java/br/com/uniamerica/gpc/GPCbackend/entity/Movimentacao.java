@@ -46,11 +46,6 @@ public class Movimentacao extends AbstractEntity {
     @Column(name = "descricao", length = 150)
     private String descricao;
 
-    @Getter
-    @Setter
-    @Column(name = "arquivos")
-    private File arquivo;
-
 
 
 }
