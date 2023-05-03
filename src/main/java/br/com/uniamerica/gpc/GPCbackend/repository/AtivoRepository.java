@@ -14,6 +14,7 @@ import java.util.List;
 public interface AtivoRepository extends JpaRepository <Ativo, Long> {
     @Query("from Ativo where idPatrimonio like :idPatrimonio")
     public List<Ativo> findByAtivo(@Param("idPatrimonio") String idPatrimonio);
+
     @Query("from Ativo ativo join ativo.categoria categoria where categoria.nomeCategoria = :nomeCategoria")
     public List<Ativo> findByCategoria(@Param("nomeCategoria") String nomeCategoria);
 }
