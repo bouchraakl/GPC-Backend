@@ -40,7 +40,7 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
      * @param dataDevolucao Data de Devolução do empréstimo, para filtrar as Movimentações
      * @return Lista de Movimentações que foram encerradas na data informada ou estão previstas para serem encerradas.
      */
-    @Query("from Movimentacao where dataDevolucao = :dataEmprestimo")
+    @Query("from Movimentacao where dataDevolucao = :dataDevolucao")
     public List<Movimentacao> findByDataDevolucao(@Param("dataDevolucao") LocalDate dataDevolucao);
 
     /**
