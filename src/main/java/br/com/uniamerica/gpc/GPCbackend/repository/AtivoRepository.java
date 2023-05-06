@@ -38,7 +38,8 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long> {
      * @param idPatrimonio o idPatrimonio do objeto Ativo a ser retornado
      * @return o objeto Ativo com o idPatrimonio especificado
      */
-    public Ativo findByIdPatrimonio(String idPatrimonio);
+    @Query("SELECT a FROM Ativo a WHERE a.idPatrimonio like :idPatrimonio")
+    public Ativo findByIdPatrimonio(@Param("idPatrimonio") final String idPatrimonio);
 
     /**
      * Retorna uma lista de objetos {@link Ativo} cujo objeto {@link Categoria}
@@ -49,6 +50,7 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long> {
      */
     @Query("SELECT a FROM Ativo a WHERE a.categoria.nomeCategoria = :nomeCategoria")
     public List<Ativo> findByNomeCategoria(@Param("nomeCategoria") final String nomeCategoria);
+
 
 
 }
