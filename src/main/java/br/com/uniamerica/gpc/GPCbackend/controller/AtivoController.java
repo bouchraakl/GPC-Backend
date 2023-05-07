@@ -59,16 +59,9 @@ public class AtivoController {
     @GetMapping("/condicao")
     public ResponseEntity<?> getByCondicao(@RequestParam("condicao") Condicao condicao) {
         List<Ativo> ativos = this.ativoRepository.findByCondicao(condicao);
-        List<Ativo> filteredAtivos =
-                ativos.stream()
-                        .filter(ativo -> ativo.getCondicao() == condicao)
-                        .toList();
-
-        if (filteredAtivos.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(filteredAtivos);
+        return ativos.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(ativos);
     }
 
     /**
@@ -80,18 +73,10 @@ public class AtivoController {
      */
     @GetMapping("/status")
     public ResponseEntity<?> getByStatus(@RequestParam Status status) {
-
         List<Ativo> ativos = this.ativoRepository.findByStatus(status);
-        List<Ativo> ativosFiltered =
-                ativos.stream()
-                        .filter(ativo -> ativo.getStatus() == status)
-                        .toList();
-
-        if (ativosFiltered.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(ativosFiltered);
+        return ativos.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(ativos);
     }
 
     /**
