@@ -7,7 +7,11 @@ import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Condicao;
 import br.com.uniamerica.gpc.GPCbackend.entity.Status;
 import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
+import br.com.uniamerica.gpc.GPCbackend.service.AtivoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,9 @@ public class AtivoController {
 
     @Autowired
     private AtivoRepository ativoRepository;
+
+    @Autowired
+    private AtivoService ativoService;
 
     /**
      * Este método manipula as solicitações GET para recuperar um objeto Ativo pelo seu ID.
@@ -87,7 +94,7 @@ public class AtivoController {
      * ou uma resposta badRequest se o idPatrimonio for inválido
      */
     @GetMapping("/idPatrimonio")
-    public ResponseEntity<?> findByIdPatrimonio(@RequestParam("idPatrimonio") String idPatrimonio) {
+    public ResponseEntity<?> getByIdPatrimonio(@RequestParam("idPatrimonio") String idPatrimonio) {
 
         final Ativo ativo = this.ativoRepository.findByIdPatrimonio(idPatrimonio);
 
@@ -105,7 +112,7 @@ public class AtivoController {
      * @param nomeCategoria o nome da categoria dos objetos Ativo a serem recuperados
      * @return uma ResponseEntity contendo a lista de objetos Ativo com o nome da categoria especificada
      */
-    public ResponseEntity<?> findByNomeCategoria(@RequestParam("nomeCategoria") String nomeCategoria) {
+    public ResponseEntity<?> getByNomeCategoria(@RequestParam("nomeCategoria") String nomeCategoria) {
         try {
 
             final List<Ativo> ativosByNomeCategoria = this.ativoRepository.findByNomeCategoria(nomeCategoria);
@@ -122,8 +129,70 @@ public class AtivoController {
         }
     }
 
+    /**
+     * Endpoint para criar um novo ativo.
+     *
+     * @param ativo O objeto de ativo a ser criado.
+     * @return Uma resposta de sucesso com uma mensagem ou uma resposta de erro com uma mensagem.
+     */
+    @PostMapping
+    public ResponseEntity<String> cadastrarAtivo(@RequestBody Ativo ativo) {
+        try {
+            this.ativoService.validarCadastroAtivo(ativo);
+            this.ativoRepository.save(ativo);
+            return ResponseEntity.ok("Ativo cadastrado com sucesso.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erro ao cadastrar ativo.");
+        }
+    }
 
+    /**
+     * Atualiza um Ativo com o ID especificado.
+     *
+     * @param id    O ID do Ativo a ser atualizado.
+     * @param ativo O objeto Ativo atualizado.
+     * @return Um ResponseEntity contendo uma mensagem de sucesso ou erro.
+     */
+    @PutMapping
+    public ResponseEntity<?> editarAtivo(
+            @RequestParam("id") final Long id,
+            @RequestBody Ativo ativo
+    ) {
+        try {
+            this.ativoService.validarUpdateAtivo(ativo);
+            this.ativoRepository.save(ativo);
+            return ResponseEntity.status(HttpStatus.OK).body("Ativo modificado com sucesso.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao cadastrar ativo: " + e.getMessage());
+        }
+    }
 
+    /**
+     * Exclui um Ativo com o ID especificado.
+     *
+     * @param id O ID do Ativo a ser excluído.
+     * @return Um ResponseEntity contendo uma mensagem de sucesso ou erro.
+     */
+    @DeleteMapping
+    public ResponseEntity<?> excluirAtivo(@RequestParam("id") Long id) {
+        try {
+            this.ativoService.validarDeleteAtivo(id);
+            this.ativoRepository.deleteById(id);
+            return ResponseEntity.ok("Ativo excluído com sucesso.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ativo não encontrado.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao excluir ativo: " + e.getMessage());
+        }
+    }
 
 
 }
