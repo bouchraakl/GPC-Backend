@@ -17,7 +17,12 @@ public class MovimentacaoService {
 
     @Transactional
     public Movimentacao novaMovimentacao(Movimentacao movimentacao){
-
+        Assert.notNull(movimentacao.getDataCriacao(), "Data de criação não informada!");
+        Assert.notNull(movimentacao.getDataEmprestimo(), "Data de empréstimo não informada!");
+        Assert.notNull(movimentacao.getAtivo(), "Ativo não informado!");
+        Assert.notNull(movimentacao.getAtivo().getId(), "ID do Ativo não informado!");
+        Assert.notNull(movimentacao.getBeneficiario(), "Beneficiário não informado!");
+        Assert.notNull(movimentacao.getBeneficiario().getId(), "ID do Beneficiário não informado!");
         return this.movimentacaoRepository.save(movimentacao);
     }
 }

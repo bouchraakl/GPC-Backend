@@ -34,12 +34,12 @@ public class Pessoa extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "rg" , length = 10,unique = true)
+    @Column(name = "rg" , length = 15,unique = true)
     private String rg;
 
     @Getter
     @Setter
-    @Column(name = "cpf" , length = 14,nullable = false,unique = true)
+    @Column(name = "cpf" , length = 15,nullable = false,unique = true)
     private String cpf;
 
     @Getter
