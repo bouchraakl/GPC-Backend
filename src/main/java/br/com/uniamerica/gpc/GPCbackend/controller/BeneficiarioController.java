@@ -7,6 +7,7 @@ package br.com.uniamerica.gpc.GPCbackend.controller;
 import br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario;
 import br.com.uniamerica.gpc.GPCbackend.entity.Pessoa;
 import br.com.uniamerica.gpc.GPCbackend.repository.BeneficiarioRepository;
+import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ import java.util.List;
 public class BeneficiarioController {
     @Autowired
     private BeneficiarioRepository beneficiarioRepository;
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
 
     @GetMapping
     public ResponseEntity<?> findById(@RequestParam("id") final Long id){
@@ -47,8 +50,6 @@ public class BeneficiarioController {
         return ResponseEntity.ok(nome);
     }
 
-
-
     @PostMapping
     public ResponseEntity<?> cadastrar (@RequestBody final Beneficiario beneficiario){
         try{
@@ -56,6 +57,32 @@ public class BeneficiarioController {
             return ResponseEntity.ok("Beneficiário cadastrado");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /***
+     *
+     * @param id Caso exista uma movimentação no histórico do id do beneficiário, o beneficiário é suspenso.
+     *
+     * @return Caso não, ele é deletado.
+     */
+    @DeleteMapping
+    public ResponseEntity<?> deletarBeneficiario(@RequestParam("id") final Long id){
+        try{
+            final Beneficiario beneficiarioBanco = this.beneficiarioRepository.findById(id).orElse(null);
+            if(beneficiarioBanco == null){
+                throw new RuntimeException("Beneficiário não encontrado.");
+            }
+            if(!this.movimentacaoRepository.findByBeneficiarioId(id).isEmpty()){
+                beneficiarioBanco.setSuspenso(true);
+                this.beneficiarioRepository.save(beneficiarioBanco);
+                return ResponseEntity.ok("Beneficiário suspenso, pois existe hitórico de movimentação.");
+            }else{
+                this.beneficiarioRepository.delete(beneficiarioBanco);
+                return ResponseEntity.ok("Beneficiário deletado.");
+            }
+        }catch (Exception e){
+                return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
