@@ -13,10 +13,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ativos", schema = "public")
 public class Ativo extends AbstractEntity {
-
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Categoria categoria;
 
