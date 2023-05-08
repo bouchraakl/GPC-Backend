@@ -8,10 +8,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 //------------------------------------------------
 @Entity
 @Table(name = "enderecos", schema = "public")
+@Audited
+@AuditTable(value = "enderecos_audit",schema = "audit")
 public class Endereco extends AbstractEntity {
 
     @Getter

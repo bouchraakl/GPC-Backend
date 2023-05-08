@@ -6,11 +6,15 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalDateTime;
 
 //------------------------------------------------
 @Entity
+@Audited
+@AuditTable(value = "ativos_audit",schema = "audit")
 @Table(name = "ativos", schema = "public")
 public class Ativo extends AbstractEntity {
     @Getter

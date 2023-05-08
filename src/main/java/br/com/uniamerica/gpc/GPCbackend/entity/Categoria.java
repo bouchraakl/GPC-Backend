@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,6 +17,8 @@ import java.util.List;
 //------------------------------------------------
 @Entity
 @Table(name = "categorias", schema = "public")
+@Audited
+@AuditTable(value = "categorias_audit",schema = "audit")
 public class Categoria extends AbstractEntity {
 
     @Getter
