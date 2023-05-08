@@ -16,7 +16,7 @@ public class Pessoa extends AbstractEntity {
     @Getter
     @Setter
     @Column(name = "nome",nullable = false,length = 50)
-    private String nome ;
+    private String nome;
     @Getter
     @Setter
     @Column(name = "email" , length = 50)
