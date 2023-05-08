@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Ativo extends AbstractEntity {
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private Categoria categoria;
 
