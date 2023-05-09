@@ -37,8 +37,7 @@ public abstract class AbstractEntity {
     @PrePersist
     private void prePersist() {
         this.dataCriacao = LocalDateTime.now();
-        this.isSuspenso = true;
-
+        this.isSuspenso = false;
     }
 
     @PreUpdate
