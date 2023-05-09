@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //------------------------------------------------
@@ -27,8 +28,8 @@ public class MovimentacaoService {
 
     @Transactional
     public Movimentacao novaMovimentacao(Movimentacao movimentacao){
-        Assert.notNull(movimentacao.getDataCriacao(), "Data de criação não informada!");
         Assert.notNull(movimentacao.getDataEmprestimo(), "Data de empréstimo não informada!");
+        Assert.notNull(movimentacao.getDataDevolucao(), "Data de devolução não informada!");
         Assert.notNull(movimentacao.getAtivo(), "Ativo não informado!");
         Assert.notNull(movimentacao.getAtivo().getId(), "ID do Ativo não informado!");
         Assert.notNull(movimentacao.getBeneficiario(), "Beneficiário não informado!");
