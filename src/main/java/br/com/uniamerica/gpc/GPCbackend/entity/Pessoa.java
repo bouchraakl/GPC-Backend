@@ -38,7 +38,7 @@ public class Pessoa extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "rg" , length = 15,unique = true)
+    @Column(name = "rg" , length = 20,unique = true)
     private String rg;
 
     @Getter
