@@ -5,12 +5,16 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalDate;
 
 //------------------------------------------------
 @Entity
 @Table(name = "pessoas",schema = "public")
+@Audited
+@AuditTable(value = "pessoas_audit",schema = "audit")
 public class Pessoa extends AbstractEntity {
 
     @Getter
@@ -34,12 +38,12 @@ public class Pessoa extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "rg" , length = 10,unique = true)
+    @Column(name = "rg" , length = 20,unique = true)
     private String rg;
 
     @Getter
     @Setter
-    @Column(name = "cpf" , length = 14,nullable = false,unique = true)
+    @Column(name = "cpf" , length = 15,nullable = false,unique = true)
     private String cpf;
 
     @Getter

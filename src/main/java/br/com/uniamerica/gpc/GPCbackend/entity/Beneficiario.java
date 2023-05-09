@@ -5,12 +5,16 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 import java.util.List;
 
 //------------------------------------------------
 @Entity
 @Table(name = "beneficiarios", schema = "public")
+@Audited
+@AuditTable(value = "beneficiarios_audit",schema = "audit")
 public class Beneficiario extends AbstractEntity {
 
     @Getter
