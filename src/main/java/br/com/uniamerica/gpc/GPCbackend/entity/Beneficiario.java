@@ -15,7 +15,7 @@ public class Beneficiario extends AbstractEntity {
 
     @Getter
     @Setter
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, unique = true)
     private Pessoa perfil;
 

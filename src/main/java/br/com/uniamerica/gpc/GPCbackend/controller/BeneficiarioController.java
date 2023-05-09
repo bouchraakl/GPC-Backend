@@ -76,7 +76,7 @@ public class BeneficiarioController {
             if(!this.movimentacaoRepository.findByBeneficiarioId(id).isEmpty()){
                 beneficiarioBanco.setSuspenso(true);
                 this.beneficiarioRepository.save(beneficiarioBanco);
-                return ResponseEntity.ok("Beneficiário suspenso, pois existe hitórico de movimentação.");
+                return ResponseEntity.ok("Beneficiário suspenso, pois existe histórico de movimentação.");
             }else{
                 this.beneficiarioRepository.delete(beneficiarioBanco);
                 return ResponseEntity.ok("Beneficiário deletado.");
