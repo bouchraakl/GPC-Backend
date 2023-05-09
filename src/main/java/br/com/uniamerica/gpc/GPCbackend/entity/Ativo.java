@@ -3,6 +3,7 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 
 //------------------Imports----------------------
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import org.hibernate.envers.Audited;
 import java.time.LocalDateTime;
 
 //------------------------------------------------
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Audited
 @AuditTable(value = "ativos_audit",schema = "audit")
