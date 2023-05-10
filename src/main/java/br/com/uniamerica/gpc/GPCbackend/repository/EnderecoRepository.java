@@ -23,7 +23,6 @@ public interface EnderecoRepository extends JpaRepository <Endereco, Long> {
     public List<Endereco> findByLogradouro(@Param("logradouro") String logradouro);
 
     @Query("from Endereco where bairro = :bairro")
-
     public List<Endereco> findByBairro(@Param("bairro") String Bairro);
 
     @Query("from Endereco where cidade = :cidade")
