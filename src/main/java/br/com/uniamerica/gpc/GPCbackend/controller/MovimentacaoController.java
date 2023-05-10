@@ -41,6 +41,15 @@ public class MovimentacaoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PutMapping
+    public ResponseEntity<?> editar(@RequestParam("id") Long id, @RequestBody Movimentacao movimentacao){
+        try {
+            final Movimentacao movimentacaoBanco = this.movimentacaoService.editar(id, movimentacao);
+            return ResponseEntity.ok(String.format("Movimentação [ %s ] atualizada com sucesso!", movimentacaoBanco.getId()));
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }
 
