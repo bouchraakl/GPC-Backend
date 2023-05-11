@@ -56,6 +56,7 @@ public class AtivoService {
         Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
 
         ativo.setDataEntrada(LocalDateTime.now());
+
     }
 
     /**
@@ -76,13 +77,9 @@ public class AtivoService {
         Assert.isTrue(existingAtivo == null || Objects.equals(existingAtivo.getId(), ativo.getId()),
                 "O ID do patrimônio já está sendo usado por outro ativo");
 
-        Assert.notNull(ativo.getCondicao(), "A condição do ativo não pode ser nula");
-        Assert.isTrue(Arrays.asList(Condicao.values()).contains(ativo.getCondicao()),
-                "A condição do ativo não é válida");
-
+        Assert.notNull(ativo.getCondicao(), "A condição do ativo não pode ser nulo");
         Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
-        Assert.isTrue(Arrays.asList(Status.values()).contains(ativo.getStatus()),
-                "O status do ativo não é válido");
+
 
     }
 
