@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 //------------------------------------------------
 @Controller
 @RequestMapping("/movimentacoes")
@@ -26,11 +29,51 @@ public class MovimentacaoController {
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(this.movimentacaoRepository.findAll());
     }
+
+    @GetMapping
+    public ResponseEntity<?> getByDataEmprestimo(@RequestParam("dataEntrada") LocalDate dataEmprestimo){
+        final List<Movimentacao> movimentacao = this.movimentacaoRepository.findByDataEmprestimo(dataEmprestimo);
+        return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada com data de empréstimo") : ResponseEntity.ok(movimentacao);
+    }
+    @GetMapping
+    public ResponseEntity<?> getByDataDevolucao(@RequestParam("dataDevolucao") LocalDate dataDevolucao){
+        final List<Movimentacao> movimentacao = this.movimentacaoRepository.findByDataDevolucao(dataDevolucao);
+        return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada") : ResponseEntity.ok(movimentacao);
+    }
+    @GetMapping
+    public ResponseEntity<?> getByBeneficiario(@RequestParam("beneficiario") String nome){
+        final List<Movimentacao> movimentacao = this.movimentacaoRepository.findByBeneficiarioNome(nome);
+        return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada") : ResponseEntity.ok(movimentacao);
+    }
+    @GetMapping
+    public ResponseEntity<?> getByBeneficiarioId(@RequestParam("beneficiario-id") Long id){
+        final List<Movimentacao> movimentacao = this.movimentacaoRepository.findByBeneficiarioId(id);
+        return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada") : ResponseEntity.ok(movimentacao);
+    }
+    @GetMapping
+    public ResponseEntity<?> getByCategoriaId(@RequestParam("categoria-id") Long id){
+        final List<Movimentacao> movimentacao = this.movimentacaoRepository.findByAtivoCategoriaId(id);
+        return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada") : ResponseEntity.ok(movimentacao);
+    }
+    @GetMapping
+    public ResponseEntity<?> getByAtivoPatrimonio(@RequestParam("ativo-patrimonio") Long id){
+        final List<Movimentacao> movimentacao = this.movimentacaoRepository.findByAtivoPatrimonio(id);
+        return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada") : ResponseEntity.ok(movimentacao);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<?> getByAtivoId(@RequestParam("ativo-id") Long id){
+        final List<Movimentacao> movimentacao = this.movimentacaoRepository.findByAtivoId(id);
+        return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada") : ResponseEntity.ok(movimentacao);
+    }
+
     @GetMapping
     public ResponseEntity<?> getById(@RequestParam("id") Long id){
         final Movimentacao movimentacao = this.movimentacaoRepository.findById(id).orElse(null);
         return movimentacao == null ? ResponseEntity.badRequest().body("Nenhuma movimentação encontrada") : ResponseEntity.ok(movimentacao);
     }
+
 
     @PostMapping
     public ResponseEntity<?> novaMovimentacao(@RequestBody Movimentacao movimentacao){

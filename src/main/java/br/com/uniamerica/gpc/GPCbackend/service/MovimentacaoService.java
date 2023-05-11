@@ -42,6 +42,8 @@ public class MovimentacaoService {
         final Beneficiario beneficiarioById = this.beneficiarioRepository.findById(movimentacao.getBeneficiario().getId()).orElse(null);
         Assert.notNull(beneficiarioById,"Beneficiario não existe");
         Assert.isTrue(!beneficiarioById.isSuspenso(), "Beneficiário está desativado!");
+        Assert.notNull(beneficiarioById.getResponsavel(), "Responsável não informado!");
+        Assert.isTrue(!beneficiarioById.getResponsavel().isSuspenso(), "Responsável desativado!");
 
 
         final Ativo ativoById = this.ativoRepository.findById(movimentacao.getAtivo().getId()).orElse(null);
