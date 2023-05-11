@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -36,24 +37,25 @@ public class AtivoService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public void validarCadastroAtivo(final Ativo ativo) {
 
+        Assert.notNull(ativo.getDataCriacao(),"Data de Criação não informada.");
+
         Assert.notNull(ativo.getCategoria(), "A categoria do ativo não pode ser nula");
         Assert.notNull(ativo.getCategoria().getId(), "O ID da categoria do ativo não pode ser nulo");
 
         Assert.notNull(ativo.getIdPatrimonio(), "O ID do patrimônio do ativo não pode ser nulo");
+        Assert.hasText(ativo.getIdPatrimonio(),"Campo Id Patrimonio não preenchido.");
+
+
         Ativo existingAtivo = ativoRepository.findByIdPatrimonio(ativo.getIdPatrimonio());
         Assert.isTrue(existingAtivo == null || Objects.equals(existingAtivo.getId(), ativo.getId()),
                 "O ID do patrimônio já está sendo usado por outro ativo");
 
 
         Assert.notNull(ativo.getCondicao(), "A condição do ativo não pode ser nula");
-        Assert.isTrue(Arrays.asList(Condicao.values()).contains(ativo.getCondicao()),
-                "A condição do ativo não é válida");
 
         Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
-        Assert.isTrue(Arrays.asList(Status.values()).contains(ativo.getStatus()),
-                "O status do ativo não é válido");
 
-        Assert.notNull(ativo.getDataEntrada(), "A data de entrada do ativo não pode ser nula");
+        ativo.setDataEntrada(LocalDateTime.now());
 
     }
 
@@ -75,13 +77,9 @@ public class AtivoService {
         Assert.isTrue(existingAtivo == null || Objects.equals(existingAtivo.getId(), ativo.getId()),
                 "O ID do patrimônio já está sendo usado por outro ativo");
 
-        Assert.notNull(ativo.getCondicao(), "A condição do ativo não pode ser nula");
-        Assert.isTrue(Arrays.asList(Condicao.values()).contains(ativo.getCondicao()),
-                "A condição do ativo não é válida");
-
+        Assert.notNull(ativo.getCondicao(), "A condição do ativo não pode ser nulo");
         Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
-        Assert.isTrue(Arrays.asList(Status.values()).contains(ativo.getStatus()),
-                "O status do ativo não é válido");
+
 
     }
 
