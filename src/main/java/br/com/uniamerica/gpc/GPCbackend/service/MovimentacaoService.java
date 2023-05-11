@@ -5,11 +5,11 @@ package br.com.uniamerica.gpc.GPCbackend.service;
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
+import br.com.uniamerica.gpc.GPCbackend.entity.Status;
 import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.BeneficiarioRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -27,20 +27,28 @@ public class MovimentacaoService {
     @Autowired
     private AtivoRepository ativoRepository;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Movimentacao novaMovimentacao(Movimentacao movimentacao){
         Assert.notNull(movimentacao.getDataEmprestimo(), "Data de empréstimo não informada!");
         Assert.notNull(movimentacao.getDataDevolucao(), "Data de devolução não informada!");
+
         Assert.notNull(movimentacao.getAtivo(), "Ativo não informado!");
         Assert.notNull(movimentacao.getAtivo().getId(), "ID do Ativo não informado!");
+
         Assert.notNull(movimentacao.getBeneficiario(), "Beneficiário não informado!");
         Assert.notNull(movimentacao.getBeneficiario().getId(), "ID do Beneficiário não informado!");
 
-        final Ativo ativoById = this.ativoRepository.findById(movimentacao.getAtivo().getId()).orElse(null);
-        Assert.notNull(ativoById,"Ativo não existe");
 
         final Beneficiario beneficiarioById = this.beneficiarioRepository.findById(movimentacao.getBeneficiario().getId()).orElse(null);
         Assert.notNull(beneficiarioById,"Beneficiario não existe");
+        Assert.isTrue(!beneficiarioById.isSuspenso(), "Beneficiário está desativado!");
+
+
+        final Ativo ativoById = this.ativoRepository.findById(movimentacao.getAtivo().getId()).orElse(null);
+        Assert.notNull(ativoById,"Ativo não existe");
+        Assert.isTrue(!ativoById.isSuspenso(),"Ativo desativado!");
+        ativoById.setStatus(Status.USANDO);
+        this.ativoRepository.save(ativoById);
 
         return this.movimentacaoRepository.save(movimentacao);
     }
