@@ -68,12 +68,13 @@ public class EnderecoController {
 
     }
 
-    @GetMapping("/uf")
+    @GetMapping("/pais") //GET
     public ResponseEntity<?> getByPais(@RequestParam("pais")String pais){
 
         final Endereco endereco = this.enderecoRepository.findByPais(pais);
         return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
 
     }
+
 
 }
