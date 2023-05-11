@@ -38,6 +38,7 @@ public class MovimentacaoService {
         Assert.notNull(movimentacao.getBeneficiario(), "Beneficiário não informado!");
         Assert.notNull(movimentacao.getBeneficiario().getId(), "ID do Beneficiário não informado!");
 
+        Assert.isTrue(movimentacao.getDataDevolucao().isAfter(movimentacao.getDataEmprestimo()), "Data de devolução não pode ser maior que data de empréstimo!");
 
         final Beneficiario beneficiarioById = this.beneficiarioRepository.findById(movimentacao.getBeneficiario().getId()).orElse(null);
         Assert.notNull(beneficiarioById,"Beneficiario não existe");
