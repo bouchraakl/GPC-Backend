@@ -50,6 +50,17 @@ public class MovimentacaoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping
+    public ResponseEntity<?> deletar(
+            @RequestParam("id") final Long id
+    ){
+        try{
+            final Movimentacao mov = this.movimentacaoService.desativar(id);
+            return ResponseEntity.ok(String.format("Movimentação [ %s ] desativada!", mov.getId()));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }
 

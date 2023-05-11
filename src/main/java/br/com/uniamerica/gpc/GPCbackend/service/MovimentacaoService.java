@@ -9,6 +9,7 @@ import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.BeneficiarioRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -59,5 +60,13 @@ public class MovimentacaoService {
         Assert.notNull(movimentacao.getBeneficiario().getId(), "ID do Beneficiário não informado!");
 
         return this.movimentacaoRepository.save(movimentacao);
+    }
+    @Transactional
+    public Movimentacao desativar(Long id){
+        final Movimentacao movimentacaoBanco = this.movimentacaoRepository.findById(id).orElse(null);
+        Assert.notNull(movimentacaoBanco, "Movimentação informada não existe!");
+
+        movimentacaoBanco.setSuspenso(true);
+        return this.movimentacaoRepository.save(movimentacaoBanco);
     }
 }
