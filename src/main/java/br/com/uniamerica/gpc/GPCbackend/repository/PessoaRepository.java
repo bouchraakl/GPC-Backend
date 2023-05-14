@@ -23,6 +23,9 @@ public interface PessoaRepository extends JpaRepository <Pessoa, Long> {
     @Query("from Pessoa where rg like :rg")
     public List<Pessoa> findByRg(@Param("rg") final String rg);
 
+    @Query("from Pessoa where endereco.id = :id")
+    public List<Pessoa> findByEnderecoId(@Param("id") final Long id);
+
     @Query("from Pessoa pessoa join pessoa.endereco endereco where endereco.cep like :cep")
     public List<Pessoa> findByCep(@Param("cep") final String cep);
 

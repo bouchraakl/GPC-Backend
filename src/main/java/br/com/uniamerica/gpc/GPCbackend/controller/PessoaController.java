@@ -4,6 +4,7 @@ package br.com.uniamerica.gpc.GPCbackend.controller;
 //------------------Imports----------------------
 import br.com.uniamerica.gpc.GPCbackend.entity.Pessoa;
 import br.com.uniamerica.gpc.GPCbackend.repository.PessoaRepository;
+import br.com.uniamerica.gpc.GPCbackend.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ public class PessoaController {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+    @Autowired
+    private PessoaService pessoaService;
 
     @GetMapping
     public ResponseEntity<?> findById(@RequestParam("id") final Long id){

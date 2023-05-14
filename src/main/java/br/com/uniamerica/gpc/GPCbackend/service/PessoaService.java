@@ -21,19 +21,59 @@ public class PessoaService {
     public void cadastrar(final Pessoa pessoa){
 
         Assert.isTrue(pessoa.getNome() != null, "ERRO COM NOME");
+        Assert.hasText(pessoa.getNome(), "ERRO COM NOME");
         Assert.isTrue(pessoa.getEmail() != null, "ERRO COM EMAIL");
+        Assert.hasText(pessoa.getEmail(), "ERRO COM EMAIL");
         Assert.isTrue(pessoa.getTelefone() != null, "ERRO COM TELEFONE");
         String regexTel = "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$";
         Assert.isTrue(pessoa.getTelefone().matches(regexTel), "TELEFONE INVALIDO");
+        Assert.hasText(pessoa.getTelefone(), "ERRO COM TELEFONE");
         Assert.isTrue(pessoa.getRg() != null, "ERRO COM RG");
         String regexRG = "^\\d{9}$";
         Assert.isTrue(pessoa.getRg().matches(regexRG), "RG INVALIDO");
+        Assert.hasText(pessoa.getRg(), "ERRO COM RG");
         Assert.isTrue(pessoa.getCpf() != null, "ERRO COM CPF");
         String regexCpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
         Assert.isTrue(pessoa.getCpf().matches(regexCpf), "CPF INVALIDO");
-        Assert.isTrue(pessoa.getEndereco() != null, "Algum Endereço já registrado");
+        Assert.hasText(pessoa.getCpf(), "ERRO COM CPF");
+        Assert.isTrue(pessoa.getEndereco() != null, "ERRO COM ENDEREÇO");
 
         this.pessoaRepository.save(pessoa);
+
+    }
+
+    public void editar(final Pessoa pessoa){
+        final Pessoa pessoaBanco = this.pessoaRepository.findById(pessoa.getId()).orElse(null);
+
+        Assert.isTrue(pessoaBanco != null || !pessoaBanco.getId().equals(pessoa.getId()), "Registro não identificado!");
+        Assert.hasText(pessoa.getNome(), "ERRO COM NOME");
+        Assert.hasText(pessoa.getEmail(), "ERRO COM EMAIL");
+        String regexTel = "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$";
+        Assert.isTrue(pessoa.getTelefone().matches(regexTel), "TELEFONE INVALIDO");
+        Assert.hasText(pessoa.getTelefone(), "ERRO COM TELEFONE");
+        String regexRG = "^\\d{9}$";
+        Assert.isTrue(pessoa.getRg().matches(regexRG), "RG INVALIDO");
+        Assert.hasText(pessoa.getRg(), "ERRO COM RG");
+        String regexCpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
+        Assert.isTrue(pessoa.getCpf().matches(regexCpf), "CPF INVALIDO");
+        Assert.hasText(pessoa.getCpf(), "ERRO COM CPF");
+
+        this.pessoaRepository.save(pessoa);
+
+    }
+
+    public void delete(final Pessoa pessoa){
+
+        final Pessoa pessoaBanco = this.pessoaRepository.findById(pessoa.getId()).orElse(null);
+
+        if(pessoaBanco == null){
+            throw new RuntimeException("Registro não encontrado");
+        }
+        if(!this.pessoaRepository.findByEnderecoId(pessoaBanco.getId()).isEmpty()){
+            pessoaBanco.setSuspenso(false);
+        }else{
+            this.pessoaRepository.delete(pessoaBanco);
+        }
 
     }
 
