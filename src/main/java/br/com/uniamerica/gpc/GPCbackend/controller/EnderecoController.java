@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 //------------------------------------------------
 @Controller
@@ -27,54 +25,88 @@ public class EnderecoController {
     private EnderecoService enderecoService;
 
 
+    @GetMapping("/lista")
+    public ResponseEntity<?> getByAll(){
 
-    @GetMapping
+        return ResponseEntity.ok(this.enderecoRepository.findAll());
+    }
+
+    @GetMapping("/cep") // GET ATRAVES DO CEP
     public ResponseEntity<?> getByCep(@RequestParam("cep")String cep){
 
         final Endereco endereco = this.enderecoRepository.findByCep(cep);
         return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
-
     }
 
-    @GetMapping("/logradouro")
+    @GetMapping("/logradouro")// GET ATRAVES DO LOGRADOURO
     public ResponseEntity<?> getByLogradouro(@RequestParam("logradouro")String logradouro){
 
         final Endereco endereco = this.enderecoRepository.findByLogradouro(logradouro);
         return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
-
     }
 
-    @GetMapping("/bairro")
+    @GetMapping("/bairro")// GET ATRAVES DO BAIRRO
     public ResponseEntity<?> getByBairro(@RequestParam("bairro")String bairro){
 
         final Endereco endereco = this.enderecoRepository.findByBairro(bairro);
         return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
-
     }
 
-    @GetMapping("/cidade")
+    @GetMapping("/cidade")// GET ATRAVES DA CIDADE
     public ResponseEntity<?> getByCidade(@RequestParam("cidade")String cidade){
 
         final Endereco endereco = this.enderecoRepository.findByCidade(cidade);
         return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
-
     }
 
-    @GetMapping("/uf")
+    @GetMapping("/uf") // GET ATRAVES DO UF
     public ResponseEntity<?> getByUf(@RequestParam("uf")String uf){
 
         final Endereco endereco = this.enderecoRepository.findByUf(uf);
         return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
-
     }
 
-    @GetMapping("/pais") //GET
+    @GetMapping("/pais") //GET ATRAVES DO PAIS
     public ResponseEntity<?> getByPais(@RequestParam("pais")String pais){
 
         final Endereco endereco = this.enderecoRepository.findByPais(pais);
         return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
-
     }
 
 
+    @PostMapping
+    public ResponseEntity<?> cadastrarEndereco(@RequestBody Endereco endereco){
+
+        try{
+            final Endereco enderecoBanco = this.enderecoService.cadastrar(endereco);
+
+            return  ResponseEntity.ok("Endereço cadastrado com sucesso");
+
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erro ao cadastrar endereco.");
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<?> editarEndereco(@RequestParam("id") Long id, @RequestBody Endereco endereco){
+
+        try{
+            final Endereco enderecoBanco = this.enderecoService.editar(endereco);
+            return ResponseEntity.ok("Endereço atualizado com sucesso!");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Erro ao editar endereco.");
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deletarEndereco(@RequestParam("id") Long id, @RequestBody Endereco endereco){
+
+
+        try{
+            final Endereco enderecoBanco = this.enderecoService.deletar(endereco);
+            return ResponseEntity.ok("Endereço deletado com sucesso!");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Erro ao deletar endereco.");
+        }
+    }
 }

@@ -16,9 +16,6 @@ public interface EnderecoRepository extends JpaRepository <Endereco, Long> {
     @Query("from Endereco where cep like :cep")
     public Endereco findByCep(@Param("cep") String cep);
 
-    @Query("from Endereco where Endereco = :Endereco")
-    public Endereco findByAll(@Param("lista") String Endereco);
-
     @Query("from Endereco where logradouro = :logradouro")
     public Endereco findByLogradouro(@Param("logradouro") String logradouro);
 
