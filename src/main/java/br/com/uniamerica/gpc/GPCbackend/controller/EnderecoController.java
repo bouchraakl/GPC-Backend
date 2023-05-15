@@ -24,9 +24,17 @@ public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
 
+    @GetMapping
+    public ResponseEntity<?> getById(@RequestParam("id") Long id){
+        final Endereco endereco = this.enderecoRepository.findById(id).orElse(null);
+        return endereco == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(endereco);
+
+    }
 
     @GetMapping("/lista")
     public ResponseEntity<?> getByAll(){
+
+
 
         return ResponseEntity.ok(this.enderecoRepository.findAll());
     }
