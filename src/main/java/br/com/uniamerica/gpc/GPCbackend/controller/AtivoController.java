@@ -112,6 +112,7 @@ public class AtivoController {
      * @param nomeCategoria o nome da categoria dos objetos Ativo a serem recuperados
      * @return uma ResponseEntity contendo a lista de objetos Ativo com o nome da categoria especificada
      */
+    @GetMapping("/nomeCategoria")
     public ResponseEntity<?> getByNomeCategoria(@RequestParam("nomeCategoria") String nomeCategoria) {
         try {
 

@@ -16,11 +16,11 @@ import java.util.List;
 @Repository
 public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Long> {
     /**
-     * @param beneficiarioId ID do Beneficiario {@link br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario}, para filtrar as Movimentações {@link Movimentacao}
+     * @param beneficiarioNome ID do Beneficiario {@link br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario}, para filtrar as Movimentações {@link Movimentacao}
      * @return Lista de movimentações que contêm o beneficiário informado
      */
-    @Query("from Movimentacao where beneficiario.id = :beneficiarioId")
-    public List<Movimentacao> findByBeneficiarioId(@Param("beneficiarioId") Long beneficiarioId);
+    @Query("from Movimentacao where beneficiario.perfil.nome like :beneficiarioNome")
+    public List<Movimentacao> findByBeneficiarioNome(@Param("beneficiarioNome") String beneficiarioNome);
 
     /**
      * @param categoriaId ID da Categoria {@link br.com.uniamerica.gpc.GPCbackend.entity.Categoria}, para filtrar as Movimentações {@link Movimentacao}
@@ -28,6 +28,15 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
      */
     @Query("from Movimentacao where ativo.categoria.id = :categoriaId")
     public List<Movimentacao> findByAtivoCategoriaId(@Param("categoriaId") Long categoriaId);
+
+    @Query("from Movimentacao where ativo.id = :ativoId")
+    public List<Movimentacao> findByAtivoId(@Param("ativoId") Long ativoId);
+
+    @Query("from Movimentacao where ativo.idPatrimonio = :idPatrimonio")
+    public List<Movimentacao> findByAtivoPatrimonio(@Param("idPatrimonio") Long idPatrimonio);
+
+    @Query("from Movimentacao where beneficiario.id = :beneficiarioId")
+    public List<Movimentacao> findByBeneficiarioId(@Param("beneficiarioId") Long beneficiarioId);
 
     /**
      * @param dataEmprestimo Data de Incio do empréstimo, para filtrar as Movimentações
