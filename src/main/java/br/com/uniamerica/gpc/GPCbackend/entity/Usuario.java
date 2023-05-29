@@ -3,6 +3,7 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 
 //------------------Imports----------------------
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 //------------------------------------------------
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "usuarios", schema = "public")
 @Audited
