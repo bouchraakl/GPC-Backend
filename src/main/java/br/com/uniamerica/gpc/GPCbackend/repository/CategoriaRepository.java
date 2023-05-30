@@ -18,4 +18,8 @@ public interface CategoriaRepository extends JpaRepository <Categoria, Long> {
     @Query("from Categoria where isSuspenso = :false")
     public List<Categoria> findByAtivo();
 
+    @Query("select listaEspera from Categoria where nomeCategoria like :nomeCategoria")
+    public List<Categoria> findByListaEspera(@Param("nomeCategoria") final String nomeCategoria);
+
+
 }

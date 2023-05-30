@@ -32,17 +32,33 @@ public class CategoriaController {
     @GetMapping
     public ResponseEntity<?> getById(@RequestParam("id") Long id){
         final Categoria categoria = this.categoriaRepository.findById(id).orElse(null);
-        return categoria == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(categoria);
+        return categoria == null ? ResponseEntity.badRequest().body("Nenhuma categoria encontrada") : ResponseEntity.ok(categoria);
 
     }
 
     @GetMapping("/ativo")
     public ResponseEntity<?> getByAtivos(){
         final List<Categoria> listaAtivos = this.categoriaRepository.findByAtivo();
-        return listaAtivos == null ? ResponseEntity.badRequest().body("nenhum endereço encontrado") : ResponseEntity.ok(listaAtivos);
+        return listaAtivos == null ? ResponseEntity.badRequest().body("Nenhuma categoria encontrada") : ResponseEntity.ok(listaAtivos);
 
     }
 
+    @GetMapping("categoria")
+    public ResponseEntity<?> getByCategoria(@RequestParam("nome")String nome){
+
+        final List<Categoria> listaNome = this.categoriaRepository.findByNome(nome);
+        return listaNome == null ? ResponseEntity.badRequest().body("Nenhuma categoria encontrada") : ResponseEntity.ok(listaNome);
+
+    }
+
+    @GetMapping("listaespera")
+    public  ResponseEntity<?> getByEspera(@RequestParam("nome")String nome){
+
+        final List<Categoria> listaEspera = this.categoriaRepository.findByListaEspera(nome);
+        return listaEspera == null ? ResponseEntity.badRequest().body("Nenhuma categoria encontrada") : ResponseEntity.ok(listaEspera);
+
+
+    }
 
 
 }
