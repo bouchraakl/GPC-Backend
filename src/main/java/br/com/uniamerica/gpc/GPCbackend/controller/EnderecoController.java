@@ -108,8 +108,6 @@ public class EnderecoController {
 
     @DeleteMapping
     public ResponseEntity<?> deletarEndereco(@RequestParam("id") Long id, @RequestBody Endereco endereco){
-
-
         try{
             final Endereco enderecoBanco = this.enderecoService.deletar(endereco);
             return ResponseEntity.ok("Endereço deletado com sucesso!");
