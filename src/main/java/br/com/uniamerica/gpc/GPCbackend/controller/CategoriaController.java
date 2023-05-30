@@ -11,9 +11,7 @@ import br.com.uniamerica.gpc.GPCbackend.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,8 +55,55 @@ public class CategoriaController {
         final List<Categoria> listaEspera = this.categoriaRepository.findByListaEspera(nome);
         return listaEspera == null ? ResponseEntity.badRequest().body("Nenhuma categoria encontrada") : ResponseEntity.ok(listaEspera);
 
+    }
 
+    @PostMapping
+    public  ResponseEntity<?> cadastrarCategoria(@RequestBody Categoria categoria){
+
+        try{
+
+            this.categoriaService.cadastrar(categoria);
+            return ResponseEntity.ok().body("Cadastrado com sucesso!");
+
+        }catch (Exception e){
+
+        return ResponseEntity.badRequest().body(e.getMessage());
+
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<?> editarCategoria(@RequestBody Categoria categoria){
+
+
+
+        try{
+
+            this.categoriaService.editar(categoria);
+            return ResponseEntity.ok().body("Editado com sucesso!");
+
+        }catch (Exception e){
+
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        }
     }
 
 
+    @DeleteMapping
+    public ResponseEntity<?> inativarCategoria(@RequestParam("id")Long id){
+
+        try{
+
+            this.categoriaService.deletar(id);
+            return ResponseEntity.ok().body("Inativado com sucesso!");
+
+        }catch (Exception e){
+
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        }
+    }
+
 }
+
