@@ -8,7 +8,10 @@ Demandado pelo **Rotary Club**, foi pensado para atender a comunidade que se ben
 
 ## Índice
 
-
+- [Principais Funções](#principais-funções)
+- [Tecnologias](#tecnologias)
+- [Requisitos para Desenvolvimento](#requisitos-para-desenvolvimento)
+- [Configuração PostgreSQL](#configuração-postgresql)
 
 ## Principais funções
 
@@ -33,7 +36,7 @@ Demandado pelo **Rotary Club**, foi pensado para atender a comunidade que se ben
 - JDK 19
 - PostgreSQL 15
 - Build com **Maven**
-- Prática e Trunk-Based com GIT
+- Prática de Trunk-Based com GIT
 
 ## Configuração PostgreSQL
 
