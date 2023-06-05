@@ -4,6 +4,7 @@ package br.com.uniamerica.gpc.GPCbackend.service;
 //------------------Imports----------------------
 
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
+import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
 import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,6 @@ public class AtivoService {
 
         Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
 
-        ativo.setDataEntrada(LocalDateTime.now());
-
         ativoRepository.save(ativo);
 
     }
@@ -75,10 +74,6 @@ public class AtivoService {
         Assert.isTrue(ativoRepository.existsById(ativo.getId()),
                 "O ID do ativo especificado não foi encontrado na base de dados. " +
                         "Por favor, verifique se o ID está correto e tente novamente.");
-
-        Assert.notNull(ativo.getCategoria(),
-                "O objeto categoria não foi informado." +
-                        " Por favor, preencha todas as informações obrigatórias para prosseguir.");
 
         Assert.notNull(ativo.getCategoria().getId(), "O ID da categoria do ativo não pode ser nulo");
 
@@ -102,13 +97,13 @@ public class AtivoService {
      * @param id o ID do ativo a ser excluído
      * @throws IllegalArgumentException se o ID do ativo não existir no repositório
      */
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public void validarDeleteAtivo(Long id) {
 
-        Assert.isTrue(ativoRepository.existsById(id),
-                "O ID do ativo especificado não foi encontrado na base de dados. " +
-                        "Por favor, verifique se o ID está correto e tente novamente.");
+    @Transactional
+    public Ativo validarDeleteAtivo(Long id){
+        final Ativo ativo = this.ativoRepository.findById(id).orElse(null);
+        Assert.notNull(ativo, "Ativo informado não existe!");
 
-        ativoRepository.deleteById(id);
+        ativo.setSuspenso(true);
+        return this.ativoRepository.save(ativo);
     }
 }
