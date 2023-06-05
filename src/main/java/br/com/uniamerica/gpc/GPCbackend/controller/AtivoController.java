@@ -1,8 +1,5 @@
 //------------------Package----------------------
 package br.com.uniamerica.gpc.GPCbackend.controller;
-
-//------------------Imports----------------------
-
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Condicao;
 import br.com.uniamerica.gpc.GPCbackend.entity.Status;
@@ -17,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-//------------------------------------------------
 
 @Controller
 @RequestMapping(value = "/ativos")
