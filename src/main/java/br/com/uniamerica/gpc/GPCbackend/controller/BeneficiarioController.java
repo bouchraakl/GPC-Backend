@@ -85,4 +85,14 @@ public class BeneficiarioController {
                 return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PutMapping
+    public ResponseEntity<?>atualizarBeneficiario(Long id, @RequestBody Beneficiario beneficiario){
+        try{
+            this.beneficiarioRepository.save(beneficiario);
+            return ResponseEntity.ok("Beneficiário atualizado com sucesso!");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
