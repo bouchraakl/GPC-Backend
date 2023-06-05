@@ -28,8 +28,8 @@ public class BeneficiarioService {
     }
 
     @Transactional
-    public Beneficiario editar(Long id, Beneficiario beneficiario) {
-        final Beneficiario beneficiarioBanco = this.beneficiarioRepository.findById(id).orElse(null);
+    public Beneficiario editar(Beneficiario beneficiario) {
+        final Beneficiario beneficiarioBanco = this.beneficiarioRepository.findById(beneficiario.getId()).orElse(null);
         Assert.notNull(beneficiarioBanco, "Beneficiário não localizado!");
         Assert.isTrue(!beneficiarioBanco.getId().equals(beneficiario.getId()), "Id na URL diverge com o corpo da requisição!.");
         Assert.notNull(beneficiario.getResponsavel(), "Responsável não informado!");

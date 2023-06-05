@@ -8,6 +8,7 @@ import br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario;
 import br.com.uniamerica.gpc.GPCbackend.entity.Pessoa;
 import br.com.uniamerica.gpc.GPCbackend.repository.BeneficiarioRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
+import br.com.uniamerica.gpc.GPCbackend.service.BeneficiarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,14 @@ import java.util.List;
 //------------------------------------------------
 @Controller
 @RequestMapping(value ="/beneficiarios")
+
 public class BeneficiarioController {
     @Autowired
     private BeneficiarioRepository beneficiarioRepository;
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
-
+    @Autowired
+    private BeneficiarioService beneficiarioService;
     @GetMapping(value="/id")
     public ResponseEntity<?> findById(@RequestParam("id") final Long id){
     final Beneficiario beneficiario = this.beneficiarioRepository.findById(id).orElse(null);
@@ -53,7 +56,7 @@ public class BeneficiarioController {
     @PostMapping(value="/cadastrar")
     public ResponseEntity<?> cadastrar (@RequestBody final Beneficiario beneficiario){
         try{
-            this.beneficiarioRepository.save(beneficiario);
+            final Beneficiario beneficiarioBanco = this.beneficiarioService.cadastrar(beneficiario);
             return ResponseEntity.ok("Beneficiário cadastrado");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -88,11 +91,17 @@ public class BeneficiarioController {
     @PutMapping
     public ResponseEntity<?>atualizarBeneficiario(Long id, @RequestBody Beneficiario beneficiario){
         try{
-            this.beneficiarioRepository.save(beneficiario);
-            return ResponseEntity.ok("Beneficiário atualizado com sucesso!");
+            final Beneficiario beneficiarioBanco = this.beneficiarioRepository.findById(id).orElse(null);
+            if(beneficiarioBanco == null || beneficiarioBanco.getId().equals(beneficiario.getId())){
+                throw new RuntimeException("Não foi possível identificar o Beneiciário informado.");
+
+            }final Beneficiario beneficiarioAtualizado = this.beneficiarioService.editar(beneficiario);
+
+            return ResponseEntity.ok("Beneficiário atualizado com sucesso");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+
     }
     @GetMapping(value="/cpf")
     public ResponseEntity<?>getByCpf(@RequestParam("cpf")final String cpf){
