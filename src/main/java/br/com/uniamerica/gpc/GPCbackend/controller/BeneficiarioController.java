@@ -94,5 +94,9 @@ public class BeneficiarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    @GetMapping
+    public ResponseEntity<?>getByCpf(@RequestParam("cpf")final String cpf){
+         final List<Beneficiario> beneficiarios = this.beneficiarioRepository.findByCpf(cpf);
+        return beneficiarios == null ? ResponseEntity.badRequest().body("Nenhum beneficiário encontrado para o CPF") : ResponseEntity.ok(beneficiarios);
+    }
 }

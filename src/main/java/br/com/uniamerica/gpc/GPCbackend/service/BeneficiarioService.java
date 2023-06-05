@@ -2,9 +2,36 @@
 package br.com.uniamerica.gpc.GPCbackend.service;
 
 //------------------Imports----------------------
+import br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario;
+import br.com.uniamerica.gpc.GPCbackend.repository.BeneficiarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 //------------------------------------------------
 @Service
 public class BeneficiarioService {
+    @Autowired
+    BeneficiarioRepository beneficiarioRepository;
+
+    @Transactional
+    public Beneficiario cadastrar(Beneficiario beneficiario){
+        Assert.notNull(beneficiario.getResponsavel(),"Responsável não informado!");
+        Assert.notNull(beneficiario.getPerfil(),"Perfil deve ser informado.");
+
+        return this.beneficiarioRepository.save(beneficiario);
+    }
+
+    @Transactional
+    public Beneficiario editar (Long id ,Beneficiario beneficiario){
+        final Beneficiario beneficiarioBanco = this.beneficiarioRepository.findById(id).orElse(null);
+        Assert.notNull(beneficiarioBanco,"Beneficiário não localizado!");
+        Assert.isTrue(!beneficiarioBanco.getId().equals(beneficiario.getId()),"Id na URL diverge com o corpo da requisição!.");
+        Assert.notNull(beneficiario.getResponsavel(),"Responsável não informado!");
+        Assert.notNull(beneficiario.getPerfil(),"Perfil não informado!");
+        return this.beneficiarioRepository.save(beneficiario);
+    }
+
+
 }
