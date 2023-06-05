@@ -60,4 +60,9 @@ public class Ativo extends AbstractEntity {
     @Column(name = "dt_entrada", nullable = false)
     private LocalDateTime dataEntrada;
 
+    @PrePersist
+    private void prePersist() {
+        this.dataEntrada = LocalDateTime.now();
+    }
+
 }
