@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class Ativo extends AbstractEntity {
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(nullable = false)
     @NotNull(message = "O objeto categoria não foi informado.")
     private Categoria categoria;
@@ -59,5 +59,15 @@ public class Ativo extends AbstractEntity {
     @Setter
     @Column(name = "dt_entrada", nullable = false)
     private LocalDateTime dataEntrada;
+
+    @PrePersist
+    private void prePersist() {
+        this.dataEntrada = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        this.dataEntrada = LocalDateTime.now();
+    }
 
 }
