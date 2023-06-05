@@ -5,6 +5,9 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
@@ -23,11 +26,15 @@ public class Ativo extends AbstractEntity {
     @Setter
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
+    @NotNull(message = "O objeto categoria não foi informado.")
     private Categoria categoria;
 
     @Getter
     @Setter
     @Column(name = "cod_patrimonio", nullable = false, unique = true, length = 10)
+    @NotNull(message = "O ID do patrimônio do ativo não pode ser nulo.")
+    @NotBlank(message = "O ID da patrimônio do ativo não pode ser vazio.")
+    @Size(min = 10,max = 10,message = "A ID Patrimonio do ativo deve ter 10 caracteres.")
     private String idPatrimonio;
 
     @Getter
@@ -45,10 +52,12 @@ public class Ativo extends AbstractEntity {
     @Getter
     @Setter
     @Column(length = 150)
+    @Size(max = 150,message = "A descricao do ativo deve ter no máximo 150 caracteres.")
     private String descricao;
 
     @Getter
     @Setter
     @Column(name = "dt_entrada", nullable = false)
     private LocalDateTime dataEntrada;
+
 }
