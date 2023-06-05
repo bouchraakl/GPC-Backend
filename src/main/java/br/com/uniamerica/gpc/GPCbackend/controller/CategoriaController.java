@@ -11,12 +11,13 @@ import br.com.uniamerica.gpc.GPCbackend.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 //------------------------------------------------
-@Controller
+@RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
 
@@ -58,7 +59,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public  ResponseEntity<?> cadastrarCategoria(@RequestBody Categoria categoria){
+    public  ResponseEntity<?> cadastrarCategoria(@Validated @RequestBody Categoria categoria){
 
         try{
 
@@ -73,8 +74,7 @@ public class CategoriaController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editarCategoria(@RequestBody Categoria categoria){
-
+    public ResponseEntity<?> editarCategoria(@Validated @RequestBody Categoria categoria, Long Id){
 
 
         try{

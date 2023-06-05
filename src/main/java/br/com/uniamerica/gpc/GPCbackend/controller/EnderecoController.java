@@ -11,10 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 //------------------------------------------------
-@Controller
+@RestController
 @RequestMapping("/enderecos")
 public class EnderecoController {
 
@@ -83,7 +84,7 @@ public class EnderecoController {
 
 
     @PostMapping
-    public ResponseEntity<?> cadastrarEndereco(@RequestBody Endereco endereco){
+    public ResponseEntity<?> cadastrarEndereco(@Validated  @RequestBody Endereco endereco){
 
         try{
             final Endereco enderecoBanco = this.enderecoService.cadastrar(endereco);
@@ -96,7 +97,7 @@ public class EnderecoController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editarEndereco(@RequestParam("id") Long id, @RequestBody Endereco endereco){
+    public ResponseEntity<?> editarEndereco(@RequestParam("id") Long id,@Validated @RequestBody Endereco endereco){
 
         try{
             final Endereco enderecoBanco = this.enderecoService.editar(endereco);
