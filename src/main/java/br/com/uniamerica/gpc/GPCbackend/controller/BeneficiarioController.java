@@ -24,7 +24,7 @@ public class BeneficiarioController {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
-    @GetMapping
+    @GetMapping(value="/id")
     public ResponseEntity<?> findById(@RequestParam("id") final Long id){
     final Beneficiario beneficiario = this.beneficiarioRepository.findById(id).orElse(null);
     return beneficiario == null ? ResponseEntity.badRequest().body("Nenhum beneficiário encontrado.") :
@@ -50,7 +50,7 @@ public class BeneficiarioController {
         return ResponseEntity.ok(nome);
     }
 
-    @PostMapping
+    @PostMapping(value="/cadastrar")
     public ResponseEntity<?> cadastrar (@RequestBody final Beneficiario beneficiario){
         try{
             this.beneficiarioRepository.save(beneficiario);
@@ -94,7 +94,7 @@ public class BeneficiarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @GetMapping
+    @GetMapping(value="/cpf")
     public ResponseEntity<?>getByCpf(@RequestParam("cpf")final String cpf){
          final List<Beneficiario> beneficiarios = this.beneficiarioRepository.findByCpf(cpf);
         return beneficiarios == null ? ResponseEntity.badRequest().body("Nenhum beneficiário encontrado para o CPF") : ResponseEntity.ok(beneficiarios);

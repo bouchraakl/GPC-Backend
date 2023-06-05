@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 //------------------------------------------------
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-//@Audited
-//@AuditTable(value = "ativos_audit",schema = "audit")
+@Audited
+@AuditTable(value = "ativos_audit",schema = "audit")
 @Table(name = "ativos", schema = "public")
 public class Ativo extends AbstractEntity {
     @Getter
