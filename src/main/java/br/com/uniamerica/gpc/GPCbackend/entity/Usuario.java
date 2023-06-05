@@ -14,7 +14,7 @@ public class Usuario extends AbstractEntity {
 
     @Getter @Setter
     @OneToOne
-    @JoinColumn(nullable = false,unique = true)
+    @JoinColumn(name = "pessoa_id", nullable = false,unique = true)
     private Pessoa perfil;
 
     @Getter

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PessoaRepository extends JpaRepository <Pessoa, Long> {
 
-    @Query("from Pessoa where is_suspenso = true")
+    @Query("from Pessoa where isSuspenso = true")
     public List<Pessoa> findByAtivo();
 
     @Query("from Pessoa where nome like :nome")
@@ -29,4 +29,7 @@ public interface PessoaRepository extends JpaRepository <Pessoa, Long> {
     @Query("from Pessoa pessoa join pessoa.endereco endereco where endereco.cep like :cep")
     public List<Pessoa> findByCep(@Param("cep") final String cep);
 
+    public boolean existsByEmail(String email);
+
+    public boolean existsByCpf(String cpf);
 }
