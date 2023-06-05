@@ -141,12 +141,9 @@ public class AtivoController {
     public ResponseEntity<String> cadastrarAtivo(@RequestBody @Validated Ativo ativo) {
         try {
             this.ativoService.validarCadastroAtivo(ativo);
-            this.ativoRepository.save(ativo);
             return ResponseEntity.ok("Ativo cadastrado com sucesso.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Erro ao cadastrar ativo.");
         }
     }
 
@@ -164,13 +161,9 @@ public class AtivoController {
     ) {
         try {
             this.ativoService.validarUpdateAtivo(ativo);
-            this.ativoRepository.save(ativo);
             return ResponseEntity.status(HttpStatus.OK).body("Ativo modificado com sucesso.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao cadastrar ativo: " + e.getMessage());
         }
     }
 
@@ -184,7 +177,6 @@ public class AtivoController {
     public ResponseEntity<?> excluirAtivo(@RequestParam("id") Long id) {
         try {
             this.ativoService.validarDeleteAtivo(id);
-            this.ativoRepository.deleteById(id);
             return ResponseEntity.ok("Ativo excluído com sucesso.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
