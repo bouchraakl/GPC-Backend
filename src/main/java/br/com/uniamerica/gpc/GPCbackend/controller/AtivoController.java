@@ -14,6 +14,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -137,7 +138,7 @@ public class AtivoController {
      * @return Uma resposta de sucesso com uma mensagem ou uma resposta de erro com uma mensagem.
      */
     @PostMapping
-    public ResponseEntity<String> cadastrarAtivo(@RequestBody Ativo ativo) {
+    public ResponseEntity<String> cadastrarAtivo(@RequestBody @Validated Ativo ativo) {
         try {
             this.ativoService.validarCadastroAtivo(ativo);
             this.ativoRepository.save(ativo);
@@ -158,8 +159,8 @@ public class AtivoController {
      */
     @PutMapping
     public ResponseEntity<?> editarAtivo(
-            @RequestParam("id") final Long id,
-            @RequestBody Ativo ativo
+            @RequestParam("id") @Validated final Long id,
+            @RequestBody @Validated Ativo ativo
     ) {
         try {
             this.ativoService.validarUpdateAtivo(ativo);
