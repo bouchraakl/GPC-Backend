@@ -38,21 +38,11 @@ public class AtivoService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public void validarCadastroAtivo(final Ativo ativo) {
 
-        ativo.setDataCriacao(LocalDateTime.now());
-
-        Assert.notNull(ativo.getCategoria(),
-                "O objeto categoria não foi informado." +
-                        " Por favor, preencha todas as informações obrigatórias para prosseguir.");
-
         Assert.notNull(ativo.getCategoria().getId(), "O ID da categoria do ativo não pode ser nulo");
 
         Assert.isTrue(categoriaRepository.existsById(ativo.getCategoria().getId()),
                 "Não foi possível registrar o ativo, " +
                         "a categoria informada não foi encontrada no sistema.");
-
-        Assert.notNull(ativo.getIdPatrimonio(), "O ID do patrimônio do ativo não pode ser nulo");
-
-        Assert.hasText(ativo.getIdPatrimonio(), "O ID da patrimônio do ativo não pode ser vazio");
 
         Ativo existingAtivo = ativoRepository.findByIdPatrimonio(ativo.getIdPatrimonio());
         Assert.isTrue(existingAtivo == null
@@ -66,6 +56,8 @@ public class AtivoService {
         Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
 
         ativo.setDataEntrada(LocalDateTime.now());
+
+        ativoRepository.save(ativo);
 
     }
 
@@ -84,17 +76,11 @@ public class AtivoService {
                 "O ID do ativo especificado não foi encontrado na base de dados. " +
                         "Por favor, verifique se o ID está correto e tente novamente.");
 
-        Assert.notNull(ativo, "O ativo não pode ser nulo");
-
-        Assert.notNull(ativo.getId(), "O ID do ativo não pode ser nulo");
-
         Assert.notNull(ativo.getCategoria(),
                 "O objeto categoria não foi informado." +
                         " Por favor, preencha todas as informações obrigatórias para prosseguir.");
 
         Assert.notNull(ativo.getCategoria().getId(), "O ID da categoria do ativo não pode ser nulo");
-
-        Assert.notNull(ativo.getIdPatrimonio(), "O ID do patrimônio do ativo não pode ser nulo");
 
         Ativo existingAtivo = ativoRepository.findByIdPatrimonio(ativo.getIdPatrimonio());
         Assert.isTrue(existingAtivo == null
@@ -102,12 +88,11 @@ public class AtivoService {
                 "Um ativo já está registrado com esse ID patrimônio. " +
                         "Por favor, verifique os dados informados e tente novamente.");
 
-        Assert.hasText(ativo.getIdPatrimonio(), "O ID da patrimônio do ativo não pode ser vazio");
-
         Assert.notNull(ativo.getCondicao(), "A condição do ativo não pode ser nulo");
 
         Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
 
+        ativoRepository.save(ativo);
 
     }
 
@@ -124,5 +109,6 @@ public class AtivoService {
                 "O ID do ativo especificado não foi encontrado na base de dados. " +
                         "Por favor, verifique se o ID está correto e tente novamente.");
 
+        ativoRepository.deleteById(id);
     }
 }
