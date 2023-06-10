@@ -36,7 +36,7 @@ public class AtivoService {
      * @param ativo o objeto {@link Ativo} a ser validado
      * @throws IllegalArgumentException se ocorrer algum erro ao realizar a validação
      */
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void validarCadastroAtivo(final Ativo ativo) {
 
         Assert.notNull(ativo.getCategoria().getId(), "O ID da categoria do ativo não pode ser nulo");
@@ -66,7 +66,7 @@ public class AtivoService {
      * @param ativo o objeto {@link Ativo} a ser validado
      * @throws IllegalArgumentException se ocorrer algum erro ao realizar a validação
      */
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void validarUpdateAtivo(Ativo ativo) {
 
         ativo.setDataEdicao(LocalDateTime.now());
