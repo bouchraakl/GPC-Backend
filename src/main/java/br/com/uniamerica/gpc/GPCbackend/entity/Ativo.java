@@ -31,10 +31,10 @@ public class Ativo extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "cod_patrimonio", nullable = false, unique = true, length = 10)
+    @Column(name = "cod_patrimonio", nullable = false, unique = true, length = 15)
     @NotNull(message = "O ID do patrimônio do ativo não pode ser nulo.")
     @NotBlank(message = "O ID da patrimônio do ativo não pode ser vazio.")
-    @Size(min = 10,max = 10,message = "A ID Patrimonio do ativo deve ter 10 caracteres.")
+    @Size(max = 15,message = "A ID Patrimonio do ativo deve ter no máximo 15 caracteres.")
     private String idPatrimonio;
 
     @Getter
