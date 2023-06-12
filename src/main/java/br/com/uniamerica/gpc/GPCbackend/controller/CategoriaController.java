@@ -35,6 +35,12 @@ public class CategoriaController {
 
     }
 
+    @GetMapping("/listar")
+    public ResponseEntity<?> getAllRequest() {
+        return ResponseEntity.ok(this.categoriaRepository.findAll());
+    }
+
+
     @GetMapping("/ativo")
     public ResponseEntity<?> getByAtivos(){
         final List<Categoria> listaAtivos = this.categoriaRepository.findByAtivo();
@@ -42,7 +48,7 @@ public class CategoriaController {
 
     }
 
-    @GetMapping("categoria")
+    @GetMapping("/categoria")
     public ResponseEntity<?> getByCategoria(@RequestParam("nome")String nome){
 
         final List<Categoria> listaNome = this.categoriaRepository.findByNome(nome);
