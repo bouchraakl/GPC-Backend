@@ -6,6 +6,8 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
@@ -25,6 +27,8 @@ public class Categoria extends AbstractEntity {
 
     @Getter
     @Setter
+    @NotNull
+    @Size(min = 3, max = 20, message = "Tamanho invalido!! MIN(3) | MAX(20)")
     @Column(name = "nome_categoria", nullable = false, length = 20)
     private String nomeCategoria;
 
@@ -45,11 +49,13 @@ public class Categoria extends AbstractEntity {
 
     @Getter
     @Setter
+    @NotNull(message = "Não informado a quantidade media para aviso do estoque")
     @Column(name = "max_amarelo", nullable = false)
     private int maximoAmarelo;
 
     @Getter
     @Setter
+    @NotNull(message = "Não informado a quantidade minima para aviso do estoque")
     @Column(name = "min_amarelo", nullable = false)
     private int minimoAmarelo;
 }
