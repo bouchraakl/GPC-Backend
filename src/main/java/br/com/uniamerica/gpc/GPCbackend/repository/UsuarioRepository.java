@@ -16,7 +16,7 @@ public interface UsuarioRepository extends JpaRepository <Usuario, Long> {
     @Query("from Pessoa where isSuspenso = true")
     public List<Usuario> findByAtivo();
 
-    @Query("from Pessoa where pessoa_id :id")
+    @Query("from Pessoa where id = :id")
     public List<Usuario> findByPerfilId(@Param("id") Long id);
 
     @Query("from Usuario usuario join usuario.perfil perfil where perfil.nome like :nome")

@@ -40,7 +40,7 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrarPessoa (@RequestParam final Pessoa pessoa){
+    public ResponseEntity<?> cadastrarPessoa (@RequestBody final Pessoa pessoa){
         try{
             this.pessoaService.cadastrar(pessoa);
             return ResponseEntity.ok("Cadastrado com sucesso");

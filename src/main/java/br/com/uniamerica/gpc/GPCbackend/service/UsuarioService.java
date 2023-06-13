@@ -6,7 +6,6 @@ import br.com.uniamerica.gpc.GPCbackend.entity.Pessoa;
 import br.com.uniamerica.gpc.GPCbackend.entity.Usuario;
 import br.com.uniamerica.gpc.GPCbackend.repository.PessoaRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.UsuarioRepository;
-import org.hibernate.engine.spi.SessionDelegatorBaseImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,15 +18,14 @@ public class UsuarioService {
     @Autowired
     private PessoaRepository pessoaRepository;
     @Autowired
-    private Pessoa perfil;
     private UsuarioRepository usuarioRepository;
 
     @Transactional
     public void cadastrar(final Usuario usuario){
 
-        Assert.isTrue(perfil.getCpf() != null, "CPF NÃO CADASTRADO");
+        Assert.isTrue(usuario.getPerfil().getCpf() != null, "CPF NÃO CADASTRADO");
         String regexCpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
-        Assert.isTrue(perfil.getCpf().matches(regexCpf), "CPF INVALIDO");
+        Assert.isTrue(usuario.getPerfil().getCpf().matches(regexCpf), "CPF INVALIDO");
         Assert.isTrue(usuario.getLogin() != null, "LOGIN JÁ CADASTRADO");
         Assert.isTrue(usuario.getPassword() != null, "SENHA JÁ CADASTRADA");
 
