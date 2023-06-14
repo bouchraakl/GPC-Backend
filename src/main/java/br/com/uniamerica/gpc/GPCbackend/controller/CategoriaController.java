@@ -80,7 +80,7 @@ public class CategoriaController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editarCategoria(@Validated @RequestBody Categoria categoria, Long Id){
+    public ResponseEntity<?> editarCategoria(@Validated @RequestBody Categoria categoria){
 
 
         try{

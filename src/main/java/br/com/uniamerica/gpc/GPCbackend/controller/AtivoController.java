@@ -2,6 +2,7 @@
 package br.com.uniamerica.gpc.GPCbackend.controller;
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Condicao;
+import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
 import br.com.uniamerica.gpc.GPCbackend.entity.Status;
 import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.AtivoService;
@@ -168,18 +169,29 @@ public class AtivoController {
      * @param id O ID do Ativo a ser excluído.
      * @return Um ResponseEntity contendo uma mensagem de sucesso ou erro.
      */
+//    @DeleteMapping
+//    public ResponseEntity<?> excluirAtivo(@RequestParam("id") Long id) {
+//        try {
+//            this.ativoService.validarDeleteAtivo(id);
+//            return ResponseEntity.ok("Ativo excluído com sucesso.");
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        } catch (EmptyResultDataAccessException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ativo não encontrado.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Erro ao excluir ativo: " + e.getMessage());
+//        }
+//    }
     @DeleteMapping
-    public ResponseEntity<?> excluirAtivo(@RequestParam("id") Long id) {
-        try {
-            this.ativoService.validarDeleteAtivo(id);
-            return ResponseEntity.ok("Ativo excluído com sucesso.");
-        } catch (IllegalArgumentException e) {
+    public ResponseEntity<?> deletar(
+            @RequestParam("id") final Long id
+    ){
+        try{
+            final Ativo ativo = this.ativoService.validarDeleteAtivo(id);
+            return ResponseEntity.ok(String.format("Ativo [ %s ] desativado!", ativo.getId()));
+        }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (EmptyResultDataAccessException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ativo não encontrado.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao excluir ativo: " + e.getMessage());
         }
     }
 

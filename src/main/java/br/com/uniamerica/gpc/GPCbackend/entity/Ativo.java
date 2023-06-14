@@ -24,17 +24,17 @@ import java.time.LocalDateTime;
 public class Ativo extends AbstractEntity {
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(nullable = false)
     @NotNull(message = "O objeto categoria não foi informado.")
     private Categoria categoria;
 
     @Getter
     @Setter
-    @Column(name = "cod_patrimonio", nullable = false, unique = true, length = 10)
+    @Column(name = "cod_patrimonio", nullable = false, unique = true, length = 15)
     @NotNull(message = "O ID do patrimônio do ativo não pode ser nulo.")
     @NotBlank(message = "O ID da patrimônio do ativo não pode ser vazio.")
-    @Size(min = 10,max = 10,message = "A ID Patrimonio do ativo deve ter 10 caracteres.")
+    @Size(max = 15,message = "A ID Patrimonio do ativo deve ter no máximo 15 caracteres.")
     private String idPatrimonio;
 
     @Getter
@@ -59,5 +59,15 @@ public class Ativo extends AbstractEntity {
     @Setter
     @Column(name = "dt_entrada", nullable = false)
     private LocalDateTime dataEntrada;
+
+    @PrePersist
+    private void prePersist() {
+        this.dataEntrada = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        this.dataEntrada = LocalDateTime.now();
+    }
 
 }
