@@ -15,4 +15,5 @@ public interface BeneficiarioRepository extends JpaRepository <Beneficiario, Lon
     public List<Beneficiario> findByNome(@Param("nome") String nome);
     @Query("from Beneficiario beneficiario join beneficiario.perfil perfil where perfil.cpf = :cpf")
     public List<Beneficiario> findByCpf(@Param("cpf") String cpf);
+
 }

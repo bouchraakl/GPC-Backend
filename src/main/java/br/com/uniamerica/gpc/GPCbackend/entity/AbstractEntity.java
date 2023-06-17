@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "is_suspenso", nullable = false)
+    @Column(name = "is_suspenso")
     private boolean isSuspenso;
 
     @Getter
