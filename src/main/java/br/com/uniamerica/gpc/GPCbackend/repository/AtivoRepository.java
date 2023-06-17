@@ -53,4 +53,6 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long> {
      */
     @Query("SELECT a FROM Ativo a WHERE a.categoria.nomeCategoria like :nomeCategoria")
     public List<Ativo> findByNomeCategoria(@Param("nomeCategoria") final String nomeCategoria);
+
+    boolean existsByIdPatrimonio(String value);
 }

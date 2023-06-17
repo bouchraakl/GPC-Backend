@@ -41,22 +41,12 @@ public class AtivoService {
     @Transactional
     public void validarCadastroAtivo(final Ativo ativo) {
 
-        Assert.notNull(ativo.getCategoria().getId(), "O ID da categoria do ativo não pode ser nulo");
-
-        Assert.isTrue(categoriaRepository.existsById(ativo.getCategoria().getId()),
-                "Não foi possível registrar o ativo, " +
-                        "a categoria informada não foi encontrada no sistema.");
-
         Ativo existingAtivo = ativoRepository.findByIdPatrimonio(ativo.getIdPatrimonio());
         Assert.isTrue(existingAtivo == null
                         || Objects.equals(existingAtivo.getId(), ativo.getId()),
                 "Um ativo já está registrado com esse ID patrimônio. " +
                         "Por favor, verifique os dados informados e tente novamente.");
 
-
-        Assert.notNull(ativo.getCondicao(), "A condição do ativo não pode ser nula");
-
-        Assert.notNull(ativo.getStatus(), "O status de disponibilidade do ativo não pode ser nulo");
 
         ativoRepository.save(ativo);
 
