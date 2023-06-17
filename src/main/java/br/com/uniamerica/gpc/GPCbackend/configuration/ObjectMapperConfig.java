@@ -1,4 +1,4 @@
-package br.com.uniamerica.gpc.GPCbackend.entity;
+package br.com.uniamerica.gpc.GPCbackend.configuration;
 
 import com.fasterxml.jackson.databind.cfg.CoercionAction;
 import com.fasterxml.jackson.databind.cfg.CoercionInputShape;

@@ -29,6 +29,10 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
     @Query("from Movimentacao where ativo.categoria.id = :categoriaId")
     public List<Movimentacao> findByAtivoCategoriaId(@Param("categoriaId") Long categoriaId);
 
+    @Query("from Movimentacao where ativo.categoria = :categoria")
+    public List<Movimentacao> findByCategoria(@Param("categoria") String categoria);
+
+
     @Query("from Movimentacao where ativo.id = :ativoId")
     public List<Movimentacao> findByAtivoId(@Param("ativoId") Long ativoId);
 

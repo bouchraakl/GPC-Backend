@@ -5,12 +5,13 @@ package br.com.uniamerica.gpc.GPCbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.Length;
 
-import java.io.File;
 import java.time.LocalDate;
 
 //------------------------------------------------
@@ -37,21 +38,21 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne
     @JoinColumn(name = "beneficiario_id", nullable = false)
     private Beneficiario beneficiario;
 
     @Getter
     @Setter
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ativo_id", nullable = false)
     private Ativo ativo;
 
     @Getter
     @Setter
+    @Length(min = 0, max = 150, message = "A descrição deve ter no máximo 150 caracteres")
     @Column(name = "descricao", length = 150)
     private String descricao;
-
-
-
 }

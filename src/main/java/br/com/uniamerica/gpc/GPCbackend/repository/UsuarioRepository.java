@@ -1,6 +1,7 @@
 package br.com.uniamerica.gpc.GPCbackend.repository;
 
 import br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario;
+import br.com.uniamerica.gpc.GPCbackend.entity.Pessoa;
 import br.com.uniamerica.gpc.GPCbackend.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,12 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository <Usuario, Long> {
+
+    @Query("from Pessoa where isSuspenso = true")
+    public List<Usuario> findByAtivo();
+
+    @Query("from Pessoa where id = :id")
+    public List<Usuario> findByPerfilId(@Param("id") Long id);
 
     @Query("from Usuario usuario join usuario.perfil perfil where perfil.nome like :nome")
     public List<Usuario> findByNome(@Param("nome") String nome);

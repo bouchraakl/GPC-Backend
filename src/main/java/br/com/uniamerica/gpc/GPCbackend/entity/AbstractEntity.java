@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "is_suspenso", nullable = false)
+    @Column(name = "is_suspenso")
     private boolean isSuspenso;
 
     @Getter
@@ -31,7 +31,7 @@ public abstract class AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "dt_criacao", nullable = false)
+    @Column(name = "dt_criacao")
     private LocalDateTime dataCriacao;
 
     @PrePersist
