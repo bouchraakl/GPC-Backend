@@ -12,8 +12,11 @@ import java.util.List;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository <Categoria, Long> {
-    @Query("from Categoria where nomeCategoria like :nomeCategoria")
-    public List<Categoria> findByNome(@Param("nomeCategoria") final String nomeCategoria);
+//    @Query("from Categoria where nomeCategoria like :nomeCategoria")
+//    public List<Categoria> findByNome(@Param("nomeCategoria") final String nomeCategoria);
+
+    @Query("SELECT c FROM Categoria c WHERE c.nomeCategoria like :nomeCategoria")
+    public Categoria findByNome(@Param("nomeCategoria") final String nome);
 
     @Query("from Categoria where isSuspenso = false")
     public List<Categoria> findByAtivo();

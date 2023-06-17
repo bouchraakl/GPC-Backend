@@ -51,12 +51,6 @@ public class Ativo extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(length = 150)
-    @Size(max = 150,message = "A descricao do ativo deve ter no máximo 150 caracteres.")
-    private String descricao;
-
-    @Getter
-    @Setter
     @Column(name = "dt_entrada", nullable = false)
     private LocalDateTime dataEntrada;
 

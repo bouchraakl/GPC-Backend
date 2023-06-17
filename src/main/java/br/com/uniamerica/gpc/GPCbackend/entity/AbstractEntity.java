@@ -31,7 +31,7 @@ public abstract class AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "dt_criacao", nullable = false)
+    @Column(name = "dt_criacao")
     private LocalDateTime dataCriacao;
 
     @PrePersist

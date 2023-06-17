@@ -8,6 +8,8 @@ import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
 import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -99,11 +101,14 @@ public class AtivoService {
      */
 
     @Transactional
-    public Ativo validarDeleteAtivo(Long id){
+    public void validarDeleteAtivo(Long id){
         final Ativo ativo = this.ativoRepository.findById(id).orElse(null);
         Assert.notNull(ativo, "Ativo informado não existe!");
-
         ativo.setSuspenso(true);
-        return this.ativoRepository.save(ativo);
+        this.ativoRepository.deleteById(id);
+    }
+
+    public Page<Ativo> listAll(Pageable pageable) {
+        return this.ativoRepository.findAll(pageable);
     }
 }

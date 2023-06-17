@@ -36,7 +36,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<?> getAllRequest() {
+    public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(this.categoriaRepository.findAll());
     }
 
@@ -48,12 +48,15 @@ public class CategoriaController {
 
     }
 
-    @GetMapping("/categoria")
-    public ResponseEntity<?> getByCategoria(@RequestParam("nome")String nome){
+    @GetMapping("/nomeCategoria")
+    public ResponseEntity<?> getByNome(@RequestParam("nomeCategoria") String nomeCategoria) {
+        final Categoria categoria = this.categoriaRepository.findByNome(nomeCategoria);
 
-        final List<Categoria> listaNome = this.categoriaRepository.findByNome(nome);
-        return listaNome == null ? ResponseEntity.badRequest().body("Nenhuma categoria encontrada") : ResponseEntity.ok(listaNome);
+        if (categoria == null || categoria.getNomeCategoria() == null) {
+            return ResponseEntity.badRequest().body("nome inválido");
+        }
 
+        return ResponseEntity.ok(categoria);
     }
 
     @GetMapping("listaespera")
