@@ -145,13 +145,11 @@ public class AtivoController {
     /**
      * Atualiza um Ativo com o ID especificado.
      *
-     * @param id    O ID do Ativo a ser atualizado.
      * @param ativo O objeto Ativo atualizado.
      * @return Um ResponseEntity contendo uma mensagem de sucesso ou erro.
      */
     @PutMapping
     public ResponseEntity<?> editarAtivo(
-            @RequestParam("id") @Validated final Long id,
             @RequestBody @Validated Ativo ativo
     ) {
         try {
