@@ -15,8 +15,9 @@ public abstract class AbstractEntity {
 
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(unique = true, nullable = false)
+    @SequenceGenerator(name = "gpc_sequence",sequenceName = "gpc_sequence",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "gpc_sequence")
+    @Column(name = "id", unique = true)
     private Long id;
 
     @Getter
@@ -31,7 +32,7 @@ public abstract class AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "dt_criacao", nullable = false)
+    @Column(name = "dt_criacao")
     private LocalDateTime dataCriacao;
 
     @PrePersist

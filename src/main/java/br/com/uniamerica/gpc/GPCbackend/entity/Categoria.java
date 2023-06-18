@@ -29,7 +29,7 @@ public class Categoria extends AbstractEntity {
     @Setter
     @NotNull
     @Size(min = 3, max = 20, message = "Tamanho invalido!! MIN(3) | MAX(20)")
-    @Column(name = "nome_categoria", nullable = false, length = 20)
+    @Column(name = "nome_categoria", nullable = false, length = 20,unique = true)
     private String nomeCategoria;
 
     //lista de Beneficiarios que estão na lista de espera de uma Categoria específica

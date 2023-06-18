@@ -46,14 +46,14 @@ public class CategoriaService {
         Assert.isTrue(categoriaBanco.getId().equals(categoria.getId()), "Categoria informada não é a mesmo que a categoria a ser atualizada");
 
 
-        List<Movimentacao> nomeCategoriaBanco = this.movimentacaoRepository.findByAtivoCategoriaId(categoria.getId());
-
-        if (nomeCategoriaBanco != null){
-        if (categoria.getNomeCategoria() != null){
-            return ResponseEntity.badRequest().body("Não é possivel editar o nome da categoria enquanto estiver movimentações atreladas a ela");
-
-        }
-        }
+//        List<Movimentacao> nomeCategoriaBanco = this.movimentacaoRepository.findByCategoria(categoria.getNomeCategoria());
+//
+//        if (nomeCategoriaBanco != null){
+//        if (categoria.getNomeCategoria() != null){
+//            return ResponseEntity.badRequest().body("Não é possivel editar o nome da categoria enquanto estiver movimentações atreladas a ela");
+//
+//        }
+//        }
 
         this.categoriaRepository.save(categoria);
         return ResponseEntity.ok().body("Editado com sucesso!");
