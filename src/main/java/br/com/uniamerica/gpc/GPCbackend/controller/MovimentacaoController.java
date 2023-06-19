@@ -7,7 +7,6 @@ package br.com.uniamerica.gpc.GPCbackend.controller;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
 import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.MovimentacaoService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,24 @@ public class MovimentacaoController {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private MovimentacaoService movimentacaoService;
+    @GetMapping(value = "/filtrar")
+    public ResponseEntity<?> filtrarMovimentacoes(
+            @RequestParam(value = "dataEntrada", required = false) LocalDate dataEntrada,
+            @RequestParam(value = "dataDevolucao", required = false) LocalDate dataDevolucao,
+            @RequestParam(value = "beneficiario-id", required = false) Long beneficiarioId,
+            @RequestParam(value = "categoria-id", required = false) Long categoriaId,
+            @RequestParam(value = "ativo-id", required = false) Long ativoId
+    ) {
+        final List<Movimentacao> movimentacoes = movimentacaoRepository.filtrarMovimentacoes(
+                dataEntrada,
+                dataDevolucao,
+                beneficiarioId,
+                categoriaId,
+                ativoId
+        );
+
+        return ResponseEntity.ok(movimentacoes);
+    }
 
     @GetMapping(value = "/listar")
     public ResponseEntity<?> getAll(){

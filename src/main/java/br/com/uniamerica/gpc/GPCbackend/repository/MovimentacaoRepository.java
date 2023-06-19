@@ -61,4 +61,20 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
      */
     @Query("from Movimentacao  where isDevolvido = true")
     public List<Movimentacao> findAllAbertas();
+
+    @Query("SELECT m FROM Movimentacao m " +
+            "WHERE (:dataEntrada IS NULL OR m.dataEmprestimo = :dataEntrada) " +
+            "AND (:dataDevolucao IS NULL OR m.dataDevolucao = :dataDevolucao) " +
+            "AND (:beneficiarioId IS NULL OR m.beneficiario.id = :beneficiarioId) " +
+            "AND (:categoriaId IS NULL OR m.ativo.categoria.id = :categoriaId) " +
+            "AND (:ativoPatrimonio IS NULL OR m.ativo.idPatrimonio = :ativoPatrimonio) " +
+            "AND (:ativoId IS NULL OR m.ativo.id = :ativoId)")
+    List<Movimentacao> filtrarMovimentacoes(
+            @Param("dataEntrada") LocalDate dataEntrada,
+            @Param("dataDevolucao") LocalDate dataDevolucao,
+            @Param("beneficiarioId") Long beneficiarioId,
+            @Param("categoriaId") Long categoriaId,
+            @Param("ativoId") Long ativoId
+    );
+
 }
