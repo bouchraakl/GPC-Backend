@@ -1,5 +1,6 @@
 //------------------Package----------------------
 package br.com.uniamerica.gpc.GPCbackend.controller;
+
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Condicao;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
@@ -11,12 +12,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -41,6 +45,7 @@ public class AtivoController {
         final Ativo ativo = ativoRepository.findById(id).orElse(null);
         return ativo == null ? ResponseEntity.badRequest().body("ID não encontrado") : ResponseEntity.ok(ativo);
     }
+
     /**
      * Manipula solicitações GET para "/listar" e recupera uma lista de todos os objetos Ativo do repositório.
      *
@@ -51,6 +56,24 @@ public class AtivoController {
     public ResponseEntity<Page<Ativo>> getAllRequest(Pageable pageable) {
         return ResponseEntity.ok(this.ativoService.listAll(pageable));
     }
+
+    @GetMapping("/dataCriacao/{startDate}/{endDate}")
+    public ResponseEntity<Page<Ativo>> getByDataCriacao(
+            Pageable pageable,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(ativoService.listByFilter(pageable, startDate, endDate));
+    }
+
+//    @GetMapping("/{startDate}/{endDate}")
+//    public ResponseEntity<?> getByDataCriacaoBetween(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+//                                                     @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+//        List<Ativo> ativos = this.ativoRepository.findByDataCriacaoBetween(startDate, endDate);
+//        return ativos.isEmpty()
+//                ? ResponseEntity.notFound().build()
+//                : ResponseEntity.ok(ativos);
+//    }
+
 
     /**
      * Manipula solicitações GET para "/condicao" e recupera uma lista de objetos Ativo com a condição especificada.
@@ -183,11 +206,11 @@ public class AtivoController {
     @DeleteMapping
     public ResponseEntity<?> deletar(
             @RequestParam("id") final Long id
-    ){
-        try{
-             this.ativoService.validarDeleteAtivo(id);
+    ) {
+        try {
+            this.ativoService.validarDeleteAtivo(id);
             return ResponseEntity.ok(String.format("Ativo [ %s ] desativado!", id));
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

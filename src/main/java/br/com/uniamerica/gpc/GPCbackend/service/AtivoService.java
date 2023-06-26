@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -40,6 +41,8 @@ public class AtivoService {
      */
     @Transactional
     public void validarCadastroAtivo(final Ativo ativo) {
+
+        ativo.setDataCriacao(LocalDateTime.now());
 
         Ativo existingAtivo = ativoRepository.findByIdPatrimonio(ativo.getIdPatrimonio());
         Assert.isTrue(existingAtivo == null
@@ -100,5 +103,9 @@ public class AtivoService {
 
     public Page<Ativo> listAll(Pageable pageable) {
         return this.ativoRepository.findAll(pageable);
+    }
+
+    public Page<Ativo> listByFilter(Pageable pageable, LocalDate startDate, LocalDate endDate) {
+        return ativoRepository.findByDataCriacaoBetween(startDate,endDate,pageable);
     }
 }

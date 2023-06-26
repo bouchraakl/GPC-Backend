@@ -4,11 +4,15 @@ package br.com.uniamerica.gpc.GPCbackend.repository;
 //------------------Imports----------------------
 
 import br.com.uniamerica.gpc.GPCbackend.entity.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 //------------------------------------------------
@@ -53,6 +57,9 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long> {
      */
     @Query("SELECT a FROM Ativo a WHERE a.categoria.nomeCategoria like :nomeCategoria")
     public List<Ativo> findByNomeCategoria(@Param("nomeCategoria") final String nomeCategoria);
+
+    @Query("SELECT a FROM Ativo a WHERE DATE(a.dataCriacao) BETWEEN :startDate AND :endDate")
+    Page<Ativo> findByDataCriacaoBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate,Pageable pageable);
 
     boolean existsByIdPatrimonio(String value);
 }
