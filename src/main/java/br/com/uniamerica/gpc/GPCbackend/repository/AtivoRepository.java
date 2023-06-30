@@ -59,7 +59,7 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long> {
     public List<Ativo> findByNomeCategoria(@Param("nomeCategoria") final String nomeCategoria);
 
     @Query("SELECT a FROM Ativo a WHERE DATE(a.dataCriacao) BETWEEN :startDate AND :endDate")
-    Page<Ativo> findByDataCriacaoBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate,Pageable pageable);
+    List<Ativo> findByDataCriacaoBetweenPdf(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     boolean existsByIdPatrimonio(String value);
 }

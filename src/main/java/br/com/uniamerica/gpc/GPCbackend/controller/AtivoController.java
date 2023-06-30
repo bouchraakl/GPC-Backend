@@ -57,22 +57,12 @@ public class AtivoController {
         return ResponseEntity.ok(this.ativoService.listAll(pageable));
     }
 
-    @GetMapping("/dataCriacao/{startDate}/{endDate}")
-    public ResponseEntity<Page<Ativo>> getByDataCriacao(
-            Pageable pageable,
+    @GetMapping("pdf/dataCriacao/{startDate}/{endDate}")
+    public ResponseEntity<?> getByDataCriacaoPdf(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return ResponseEntity.ok(ativoService.listByFilter(pageable, startDate, endDate));
+        return ResponseEntity.ok(ativoRepository.findByDataCriacaoBetweenPdf(startDate,endDate));
     }
-
-//    @GetMapping("/{startDate}/{endDate}")
-//    public ResponseEntity<?> getByDataCriacaoBetween(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-//                                                     @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-//        List<Ativo> ativos = this.ativoRepository.findByDataCriacaoBetween(startDate, endDate);
-//        return ativos.isEmpty()
-//                ? ResponseEntity.notFound().build()
-//                : ResponseEntity.ok(ativos);
-//    }
 
 
     /**

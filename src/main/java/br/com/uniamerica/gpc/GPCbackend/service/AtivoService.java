@@ -105,7 +105,4 @@ public class AtivoService {
         return this.ativoRepository.findAll(pageable);
     }
 
-    public Page<Ativo> listByFilter(Pageable pageable, LocalDate startDate, LocalDate endDate) {
-        return ativoRepository.findByDataCriacaoBetween(startDate,endDate,pageable);
-    }
 }

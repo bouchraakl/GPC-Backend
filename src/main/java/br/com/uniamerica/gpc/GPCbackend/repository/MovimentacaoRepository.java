@@ -76,5 +76,11 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
             @Param("categoriaId") Long categoriaId,
             @Param("ativoId") Long ativoId
     );
+    @Query("SELECT m FROM Movimentacao m " +
+            "WHERE m.dataEmprestimo >= :dataEntrada " +
+            "AND m.dataDevolucao <= :dataDevolucao")
+    List<Movimentacao> findMovementsBetweenDates(
+            @Param("dataEntrada") LocalDate dataEntrada,
+            @Param("dataDevolucao") LocalDate dataDevolucao);
 
 }
