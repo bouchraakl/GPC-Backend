@@ -9,11 +9,13 @@ import br.com.uniamerica.gpc.GPCbackend.entity.Endereco;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //------------------------------------------------
@@ -57,6 +59,13 @@ public class CategoriaController {
         }
 
         return ResponseEntity.ok(categoria);
+    }
+
+    @GetMapping("pdf/dataCriacao/{startDate}/{endDate}")
+    public ResponseEntity<?> getByDataCriacaoPdf(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(categoriaRepository.findByDataCriacaoBetweenPdf(startDate,endDate));
     }
 
     @GetMapping("listaespera")
