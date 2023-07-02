@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,10 +72,11 @@ public class CategoriaService {
 
         if (idCategoriaBanco != null){
             return ResponseEntity.badRequest().body("Não é possivel inativar pois existe uma movimentação com essa categoria");
-
         }
 
         categoriaBanco.setSuspenso(true);
+
+        this.categoriaRepository.save(categoriaBanco);
 
         return ResponseEntity.ok().body("Inativado com sucesso!");
 
