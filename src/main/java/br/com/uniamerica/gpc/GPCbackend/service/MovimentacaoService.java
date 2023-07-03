@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Jean Moschen
  * */
@@ -29,6 +31,7 @@ public class MovimentacaoService {
 
     @Transactional(rollbackFor = Exception.class)
     public Movimentacao novaMovimentacao(Movimentacao movimentacao){
+        movimentacao.setDataCriacao(LocalDateTime.now());
         Assert.notNull(movimentacao.getDataEmprestimo(), "Data de empréstimo não informada!");
         Assert.notNull(movimentacao.getDataDevolucao(), "Data de devolução não informada!");
 

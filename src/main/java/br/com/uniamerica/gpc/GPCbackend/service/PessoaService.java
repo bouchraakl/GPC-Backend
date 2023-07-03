@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
+
 //------------------------------------------------
 @Service
 public class PessoaService {
@@ -19,6 +21,8 @@ public class PessoaService {
 
     @Transactional
     public void cadastrar(final Pessoa pessoa){
+
+        pessoa.setDataCriacao(LocalDateTime.now());
 
         Assert.isTrue(pessoa.getNome() != null, "ERRO COM NOME");
         Assert.hasText(pessoa.getNome(), "ERRO COM NOME");

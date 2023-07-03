@@ -40,6 +40,13 @@ public class PessoaController {
         return ResponseEntity.ok(this.pessoaRepository.findAll());
     }
 
+
+    @GetMapping("/cpf")
+    public ResponseEntity<?> findByCPF(@RequestParam("cpf") String cpf){
+
+        return ResponseEntity.ok(this.pessoaRepository.findByCpf(cpf));
+    }
+
     /**
      * Método GET para retornar as Pessoas em que a flag isSuspenso é false, ou seja, que estão ativas
      * @return Todas as Pessoas ativas
