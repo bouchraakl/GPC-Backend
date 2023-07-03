@@ -65,7 +65,7 @@ public class PessoaController {
     @PostMapping
     public ResponseEntity<?> cadastrarPessoa (@RequestBody @Validated Pessoa pessoa){
         try{
-            this.pessoaRepository.save(pessoa);
+            this.pessoaService.cadastrar(pessoa);
             return ResponseEntity.ok("Pessoa cadastrada com sucesso");
         }catch (Exception erro){
             return ResponseEntity.badRequest().body(erro.getMessage());
