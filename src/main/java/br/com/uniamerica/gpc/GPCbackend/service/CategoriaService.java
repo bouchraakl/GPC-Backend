@@ -6,6 +6,7 @@ import br.com.uniamerica.gpc.GPCbackend.controller.CategoriaController;
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Categoria;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
+import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.time.LocalDateTime;
+import java.io.Console;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,11 +28,13 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
+    @Autowired
+    private AtivoRepository ativoRepository;
+
 
     @Transactional
     public Categoria cadastrar(Categoria categoria){
 
-        categoria.setDataCriacao(LocalDateTime.now());
         Assert.notNull(categoria.getNomeCategoria(), "Nome da categoria não informado");
         Assert.notNull(categoria.getMinimoAmarelo(), "Número minimo de itens para dar alerta de estoque não informado");
         Assert.notNull(categoria.getMaximoAmarelo(), "Número maximo de itens para dar alerta de estoque não informado");
@@ -63,27 +66,17 @@ public class CategoriaService {
     }
 
     @Transactional
-    public ResponseEntity<?> deletar(Long id){
+    public void deletar(Long id){
 
+        final Categoria categoria = this.categoriaRepository.findById(id).orElse(null);
+        Assert.notNull(categoria, "Categoria não encontrado!");
 
-        final Categoria categoriaBanco = this.categoriaRepository.findById(id).orElse(null);
-        Assert.notNull(categoriaBanco, "Categoria inexistente!");
-
-        List<Movimentacao> idCategoriaBanco = this.movimentacaoRepository.findByAtivoCategoriaId(categoriaBanco.getId());
-
-        if (idCategoriaBanco != null){
-            return ResponseEntity.badRequest().body("Não é possivel inativar pois existe uma movimentação com essa categoria");
-
+        if(!this.movimentacaoRepository.findByAtivoCategoriaId(id).isEmpty()){
+            categoria.setSuspenso(true);
+            this.categoriaRepository.save(categoria);
+        }else{
+            this.categoriaRepository.deleteById(id);
         }
-
-        categoriaBanco.setSuspenso(true);
-
-        return ResponseEntity.ok().body("Inativado com sucesso!");
-
-
-
-
-
     }
 
 
