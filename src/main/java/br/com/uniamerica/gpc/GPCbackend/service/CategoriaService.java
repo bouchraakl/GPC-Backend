@@ -6,6 +6,7 @@ import br.com.uniamerica.gpc.GPCbackend.controller.CategoriaController;
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Categoria;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
+import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class CategoriaService {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private AtivoRepository ativoRepository;
 
 
     @Transactional
@@ -62,28 +66,17 @@ public class CategoriaService {
     }
 
     @Transactional
-    public ResponseEntity<?> deletar(Long id){
+    public void deletar(Long id){
 
+        final Categoria categoria = this.categoriaRepository.findById(id).orElse(null);
+        Assert.notNull(categoria, "Categoria não encontrado!");
 
-        final Categoria categoriaBanco = this.categoriaRepository.findById(id).orElse(null);
-        Assert.notNull(categoriaBanco, "Categoria inexistente!");
-
-        List<Movimentacao> idCategoriaBanco = this.movimentacaoRepository.findByAtivoCategoriaId(categoriaBanco.getId());
-
-        if (idCategoriaBanco != null){
-            return ResponseEntity.badRequest().body("Não é possivel inativar pois existe uma movimentação com essa categoria");
+        if(!this.movimentacaoRepository.findByAtivoCategoriaId(id).isEmpty()){
+            categoria.setSuspenso(true);
+            this.categoriaRepository.save(categoria);
+        }else{
+            this.categoriaRepository.deleteById(id);
         }
-
-        categoriaBanco.setSuspenso(true);
-
-        this.categoriaRepository.save(categoriaBanco);
-
-        return ResponseEntity.ok().body("Inativado com sucesso!");
-
-
-
-
-
     }
 
 

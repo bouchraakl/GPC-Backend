@@ -4,7 +4,9 @@ package br.com.uniamerica.gpc.GPCbackend.service;
 //------------------Imports----------------------
 
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
+import br.com.uniamerica.gpc.GPCbackend.entity.Categoria;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
+import br.com.uniamerica.gpc.GPCbackend.entity.Status;
 import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ public class AtivoService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
+
     /**
      * Valida o objeto {@link Ativo} fornecido antes de salvar.
      *
@@ -49,7 +52,6 @@ public class AtivoService {
                         || Objects.equals(existingAtivo.getId(), ativo.getId()),
                 "Um ativo já está registrado com esse ID patrimônio. " +
                         "Por favor, verifique os dados informados e tente novamente.");
-
 
         ativoRepository.save(ativo);
 
