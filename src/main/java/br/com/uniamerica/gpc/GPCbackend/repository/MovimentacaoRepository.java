@@ -23,11 +23,11 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
     public List<Movimentacao> findByBeneficiarioNome(@Param("beneficiarioNome") String beneficiarioNome);
 
     /**
-     * @param categoriaId ID da Categoria {@link br.com.uniamerica.gpc.GPCbackend.entity.Categoria}, para filtrar as Movimentações {@link Movimentacao}
+     * @param id ID da Categoria {@link br.com.uniamerica.gpc.GPCbackend.entity.Categoria}, para filtrar as Movimentações {@link Movimentacao}
      * @return Lista de Movimentações que contêm a categoria informada
      */
-    @Query("from Movimentacao where ativo.categoria.id = :categoriaId")
-    public List<Movimentacao> findByAtivoCategoriaId(@Param("categoriaId") Long categoriaId);
+    @Query("from Movimentacao where ativo.categoria.id = :id")
+    public List<Movimentacao> findByAtivoCategoriaId(@Param("id") Long id);
 
     @Query("from Movimentacao where ativo.categoria = :categoria")
     public List<Movimentacao> findByCategoria(@Param("categoria") String categoria);

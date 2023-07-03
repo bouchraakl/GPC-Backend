@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 //------------------------------------------------
@@ -62,4 +63,8 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long> {
     List<Ativo> findByDataCriacaoBetweenPdf(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     boolean existsByIdPatrimonio(String value);
+
+
+    @Query("FROM Ativo WHERE id = :id")
+    public List<Ativo> findByCategoriaId(@Param("id") Long id);
 }
