@@ -29,24 +29,11 @@ public class MovimentacaoService {
 
     @Transactional(rollbackFor = Exception.class)
     public Movimentacao novaMovimentacao(Movimentacao movimentacao){
-        movimentacao.setDataCriacao(LocalDateTime.now());
-        Assert.notNull(movimentacao.getDataEmprestimo(), "Data de empréstimo não informada!");
-        Assert.notNull(movimentacao.getDataDevolucao(), "Data de devolução não informada!");
-
-        Assert.notNull(movimentacao.getAtivo(), "Ativo não informado!");
-        Assert.notNull(movimentacao.getAtivo().getId(), "ID do Ativo não informado!");
-
-        Assert.notNull(movimentacao.getBeneficiario(), "Beneficiário não informado!");
-        Assert.notNull(movimentacao.getBeneficiario().getId(), "ID do Beneficiário não informado!");
-
         Assert.isTrue(movimentacao.getDataDevolucao().isAfter(movimentacao.getDataEmprestimo()), "Data de devolução não pode ser maior que data de empréstimo!");
 
         final Pessoa beneficiarioById = this.pessoaRepository.findById(movimentacao.getBeneficiario().getId()).orElse(null);
         Assert.notNull(beneficiarioById,"Beneficiario não existe");
         Assert.isTrue(!beneficiarioById.isSuspenso(), "Beneficiário está desativado!");
-//        Assert.notNull(beneficiarioById.getResponsavel(), "Responsável não informado!");
-//        Assert.isTrue(!beneficiarioById.getResponsavel().isSuspenso(), "Responsável desativado!");
-
 
         final Ativo ativoById = this.ativoRepository.findById(movimentacao.getAtivo().getId()).orElse(null);
         Assert.notNull(ativoById,"Ativo não existe");
