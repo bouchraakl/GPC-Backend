@@ -41,7 +41,7 @@ public class PessoaController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/cpf")
     public ResponseEntity<?> findByCPF(@RequestParam("cpf") String cpf){
 
         return ResponseEntity.ok(this.pessoaRepository.findByCpf(cpf));
