@@ -7,6 +7,7 @@ import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
 import br.com.uniamerica.gpc.GPCbackend.repository.AtivoRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
+import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 //------------------------------------------------
@@ -33,6 +36,9 @@ public class AtivoService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
+
     /**
      * Valida o objeto {@link Ativo} fornecido antes de salvar.
      *
@@ -41,7 +47,6 @@ public class AtivoService {
      */
     @Transactional
     public void validarCadastroAtivo(final Ativo ativo) {
-
         ativo.setDataCriacao(LocalDateTime.now());
 
         Ativo existingAtivo = ativoRepository.findByIdPatrimonio(ativo.getIdPatrimonio());
@@ -50,10 +55,18 @@ public class AtivoService {
                 "Um ativo já está registrado com esse ID patrimônio. " +
                         "Por favor, verifique os dados informados e tente novamente.");
 
+        List<Ativo> setAtivos = ativo.getCategoria().getAtivos();
+        if (setAtivos == null) {
+            setAtivos = new ArrayList<>(); // Initialize an empty list
+            ativo.getCategoria().setAtivos(setAtivos); // Set the initialized list back to the Categoria object
+        }
+
+        setAtivos.add(ativo);
+        ativo.getCategoria().setAtivos(setAtivos);
 
         ativoRepository.save(ativo);
-
     }
+
 
     /**
      * Valida o objeto {@link Ativo} fornecido antes de atualizá-lo.
@@ -97,8 +110,13 @@ public class AtivoService {
     public void validarDeleteAtivo(Long id){
         final Ativo ativo = this.ativoRepository.findById(id).orElse(null);
         Assert.notNull(ativo, "Ativo informado não existe!");
-        ativo.setSuspenso(true);
-        this.ativoRepository.deleteById(id);
+        if (movimentacaoRepository.findByAtivoId(id).isEmpty()){
+            this.ativoRepository.deleteById(id);
+        }else {
+            ativo.setSuspenso(true);
+        }
+
+
     }
 
     public Page<Ativo> listAll(Pageable pageable) {
