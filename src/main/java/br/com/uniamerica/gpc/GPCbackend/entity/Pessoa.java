@@ -48,7 +48,6 @@ public class Pessoa extends AbstractEntity {
     private String telefone;
 
     @NotNull(message = "Data de Nascimento deve ser informada!")
-    @NotBlank(message = "Data de nascimento foi informada vazia!")
     @Getter
     @Setter
     @Column(name = "dt_nascimento")
@@ -73,7 +72,7 @@ public class Pessoa extends AbstractEntity {
     @NotNull(message = "Informe o endereço!")
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="endereco_id" ,nullable = false)
     private Endereco endereco;
 }

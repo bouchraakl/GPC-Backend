@@ -8,10 +8,11 @@ import br.com.uniamerica.gpc.GPCbackend.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 //------------------------------------------------
-@Controller
+@RestController
 @RequestMapping(value = "/pessoas")
 public class PessoaController {
     @Autowired
@@ -62,9 +63,9 @@ public class PessoaController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<?> cadastrarPessoa (@RequestBody final Pessoa pessoa){
+    public ResponseEntity<?> cadastrarPessoa (@RequestBody @Validated Pessoa pessoa){
         try{
-            this.pessoaService.cadastrar(pessoa);
+            this.pessoaRepository.save(pessoa);
             return ResponseEntity.ok("Pessoa cadastrada com sucesso");
         }catch (Exception erro){
             return ResponseEntity.badRequest().body(erro.getMessage());

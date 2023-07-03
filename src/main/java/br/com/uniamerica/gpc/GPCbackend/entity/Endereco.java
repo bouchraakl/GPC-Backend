@@ -58,8 +58,6 @@ public class Endereco extends AbstractEntity {
     @Getter
     @Setter
     @NotNull(message = "Numero precisa ser informado!")
-    @NotBlank(message = "Numero precisa ser informado!")
-    @Size(min = 2, max = 3, message = "Tamanho invalido! MIN(1) MAX(7)")
     @Column(nullable = false, length = 7)
     private Integer numero;
 
