@@ -83,7 +83,7 @@ public class Endereco extends AbstractEntity {
     @Getter
     @Setter
     @Size(min = 3, max = 15, message = "Tamanho invalido! MIN(3) MAX(15)")
-    @Column(nullable = false, length = 15)
+    @Column(length = 15)
     private String complemento;
 
 
