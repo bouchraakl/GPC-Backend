@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
+
 //------------------------------------------------
 @Service
 public class BeneficiarioService {
@@ -21,6 +23,7 @@ public class BeneficiarioService {
 
     @Transactional
     public Beneficiario cadastrar(Beneficiario beneficiario) {
+        beneficiario.setDataCriacao(LocalDateTime.now());
         Assert.notNull(beneficiario.getResponsavel(), "Responsável não informado!");
         Assert.notNull(beneficiario.getPerfil(), "Perfil deve ser informado.");
 

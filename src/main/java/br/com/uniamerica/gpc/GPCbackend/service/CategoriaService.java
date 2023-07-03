@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +31,7 @@ public class CategoriaService {
     @Transactional
     public Categoria cadastrar(Categoria categoria){
 
+        categoria.setDataCriacao(LocalDateTime.now());
         Assert.notNull(categoria.getNomeCategoria(), "Nome da categoria não informado");
         Assert.notNull(categoria.getMinimoAmarelo(), "Número minimo de itens para dar alerta de estoque não informado");
         Assert.notNull(categoria.getMaximoAmarelo(), "Número maximo de itens para dar alerta de estoque não informado");
