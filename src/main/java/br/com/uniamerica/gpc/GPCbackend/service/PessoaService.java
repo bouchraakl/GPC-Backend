@@ -22,19 +22,23 @@ public class PessoaService {
 
     @Transactional
     public void cadastrar(final Pessoa pessoa){
-        final List<Pessoa> pessoaByCpf = this.pessoaRepository.findByCpf(pessoa.getCpf());
-        Assert.isTrue(pessoaByCpf.isEmpty(), String.format("Pessoa com CPF [ %s ] já existe!", pessoa.getCpf()));
+        final Pessoa pessoaByCpf = this.pessoaRepository.findByCpf(pessoa.getCpf());
+        Assert.isNull(pessoaByCpf, String.format("Pessoa com CPF [ %s ] já existe!", pessoa.getCpf()));
         final List<Pessoa> pessoaByRg = this.pessoaRepository.findByRg(pessoa.getRg());
         Assert.isTrue(pessoaByRg.isEmpty(), String.format("Pessoa com RG [ %s ] já existe!", pessoa.getRg()));
         this.pessoaRepository.save(pessoa);
     }
-
+    @Transactional
     public void editar(final Pessoa pessoa){
-        final List<Pessoa> pessoaByCpf = this.pessoaRepository.findByCpf(pessoa.getCpf());
-        Assert.isTrue(pessoaByCpf.get(0).getId().equals(pessoa.getId()), "Condutor informado não é o mesmo que o condutor a ser atualizado");
-        final List<Pessoa> pessoaByRg = this.pessoaRepository.findByRg(pessoa.getRg());
-        Assert.isTrue(pessoaByRg.get(0).getId().equals(pessoa.getId()), "Condutor informado não é o mesmo que o condutor a ser atualizado");
+        final Pessoa pessoaByCpf = this.pessoaRepository.findByCpf(pessoa.getCpf());
+        if(pessoaByCpf != null){
+            Assert.isTrue(pessoaByCpf.getId().equals(pessoa.getId()),  String.format("Pessoa com CPF [ %s ] já existe!", pessoa.getCpf()));
+        }
 
+        final List<Pessoa> pessoaByRg = this.pessoaRepository.findByRg(pessoa.getRg());
+        if(!pessoaByRg.isEmpty()){
+            Assert.isTrue(pessoaByRg.get(0).getId().equals(pessoa.getId()),  String.format("Pessoa com RG [ %s ] já existe!", pessoa.getRg()));
+        }
         this.pessoaRepository.save(pessoa);
     }
 

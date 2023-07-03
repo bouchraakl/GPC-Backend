@@ -56,6 +56,10 @@ public class AtivoController {
     public ResponseEntity<Page<Ativo>> getAllRequest(Pageable pageable) {
         return ResponseEntity.ok(this.ativoService.listAll(pageable));
     }
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(this.ativoRepository.findAll());
+    }
 
     @GetMapping("pdf/dataCriacao/{startDate}/{endDate}")
     public ResponseEntity<?> getByDataCriacaoPdf(

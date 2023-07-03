@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PessoaRepository extends JpaRepository <Pessoa, Long> {
 
-    @Query("from Pessoa where isSuspenso = true")
+    @Query("from Pessoa where isSuspenso = false")
     public List<Pessoa> findByAtivo();
 
     @Query("from Pessoa where nome like :nome")

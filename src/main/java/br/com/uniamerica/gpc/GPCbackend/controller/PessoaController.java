@@ -82,7 +82,7 @@ public class PessoaController {
     @PutMapping
     public ResponseEntity<?> editar(
             @RequestParam("id") final Long id,
-            @RequestBody Pessoa pessoa
+            @RequestBody @Validated Pessoa pessoa
     ){
         try {
             final Pessoa pessoaBanco = this.pessoaRepository.findById(id).orElse(null);

@@ -19,7 +19,7 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
      * @param beneficiarioNome ID do Beneficiario {@link br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario}, para filtrar as Movimentações {@link Movimentacao}
      * @return Lista de movimentações que contêm o beneficiário informado
      */
-    @Query("from Movimentacao where beneficiario.perfil.nome like :beneficiarioNome")
+    @Query("from Movimentacao where beneficiario.nome like :beneficiarioNome")
     public List<Movimentacao> findByBeneficiarioNome(@Param("beneficiarioNome") String beneficiarioNome);
 
     /**

@@ -40,8 +40,8 @@ public class Movimentacao extends AbstractEntity {
     @Setter
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "beneficiario_id", nullable = false)
-    private Beneficiario beneficiario;
+    @JoinColumn(name = "pessoa_id", nullable = false)
+    private Pessoa beneficiario;
 
     @Getter
     @Setter
