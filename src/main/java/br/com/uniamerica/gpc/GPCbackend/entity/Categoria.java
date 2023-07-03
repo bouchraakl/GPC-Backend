@@ -36,10 +36,10 @@ public class Categoria extends AbstractEntity {
     @Getter
     @Setter
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "categoria_beneficiario",
+    @JoinTable(name = "categoria_pessoa",
             joinColumns = @JoinColumn(name = "categoria_id"),
-            inverseJoinColumns = @JoinColumn(name = "beneficiario_id"))
-    private List<Beneficiario> listaEspera;
+            inverseJoinColumns = @JoinColumn(name = "pessoa_id"))
+    private List<Pessoa> listaEspera;
 
     @Getter
     @Setter

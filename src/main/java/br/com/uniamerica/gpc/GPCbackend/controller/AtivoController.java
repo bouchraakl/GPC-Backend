@@ -114,6 +114,19 @@ public class AtivoController {
         return ResponseEntity.ok(ativo);
     }
 
+    @GetMapping("/idcategoria")
+    public ResponseEntity<?> getByIdCategoria(@RequestParam("id") Long id) {
+
+        final List<Ativo> ativo = this.ativoRepository.findByCategoriaId(id);
+
+
+        return ativo.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(ativo);
+
+    }
+
+
     /**
      * Manipula solicitações GET para "/categoria" e recupera uma lista de objetos Ativo com o
      * nome da categoria especificada.

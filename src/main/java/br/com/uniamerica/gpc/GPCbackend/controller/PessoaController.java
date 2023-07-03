@@ -2,6 +2,7 @@
 package br.com.uniamerica.gpc.GPCbackend.controller;
 
 //------------------Imports----------------------
+import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Pessoa;
 import br.com.uniamerica.gpc.GPCbackend.repository.PessoaRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.PessoaService;

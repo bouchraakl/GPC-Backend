@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -15,5 +16,9 @@ public interface BeneficiarioRepository extends JpaRepository <Beneficiario, Lon
     public List<Beneficiario> findByNome(@Param("nome") String nome);
     @Query("from Beneficiario beneficiario join beneficiario.perfil perfil where perfil.cpf = :cpf")
     public List<Beneficiario> findByCpf(@Param("cpf") String cpf);
+
+    @Query("SELECT b FROM Beneficiario b WHERE DATE(b.dataCriacao) BETWEEN :startDate AND :endDate")
+    List<Beneficiario> findByDataCriacaoBetweenPdf(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 
 }

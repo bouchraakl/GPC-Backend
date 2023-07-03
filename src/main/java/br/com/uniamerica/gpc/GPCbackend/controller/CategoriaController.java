@@ -4,12 +4,14 @@ package br.com.uniamerica.gpc.GPCbackend.controller;
 //------------------Imports----------------------
 
 
+import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Categoria;
 import br.com.uniamerica.gpc.GPCbackend.entity.Endereco;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -92,18 +94,14 @@ public class CategoriaController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editarCategoria(@Validated @RequestBody Categoria categoria){
-
-
-        try{
-
-            this.categoriaService.editar(categoria);
-            return ResponseEntity.ok().body("Editado com sucesso!");
-
-        }catch (Exception e){
-
+    public ResponseEntity<?> editarCategoria(
+            @RequestBody @Validated Categoria categotia
+    ) {
+        try {
+            this.categoriaService.editar(categotia);
+            return ResponseEntity.status(HttpStatus.OK).body("Categoria modificada com sucesso.");
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-
         }
     }
 

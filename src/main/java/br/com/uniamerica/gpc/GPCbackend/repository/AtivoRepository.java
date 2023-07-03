@@ -65,6 +65,6 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long> {
     boolean existsByIdPatrimonio(String value);
 
 
-    @Query("FROM Ativo WHERE id = :id")
+    @Query("FROM Ativo WHERE categoria.id = :id")
     public List<Ativo> findByCategoriaId(@Param("id") Long id);
 }
