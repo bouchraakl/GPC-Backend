@@ -33,6 +33,13 @@ public class PessoaController {
         return ResponseEntity.ok(this.pessoaRepository.findAll());
     }
 
+    @GetMapping("/cpf")
+    public ResponseEntity<?> findByCPF(@RequestParam("cpf") String cpf){
+
+        return ResponseEntity.ok(this.pessoaRepository.findByCpf(cpf));
+    }
+
+
     @GetMapping("/ativos")
     public ResponseEntity<?> findByAtivo(){
 
