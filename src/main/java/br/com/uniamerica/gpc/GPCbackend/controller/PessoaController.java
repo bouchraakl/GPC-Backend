@@ -2,6 +2,7 @@
 package br.com.uniamerica.gpc.GPCbackend.controller;
 
 //------------------Imports----------------------
+import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Pessoa;
 import br.com.uniamerica.gpc.GPCbackend.repository.PessoaRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.PessoaService;
@@ -33,10 +34,10 @@ public class PessoaController {
         return ResponseEntity.ok(this.pessoaRepository.findAll());
     }
 
-    @GetMapping("/cpf")
-    public ResponseEntity<?> findByCPF(@RequestParam("cpf") String cpf){
-
-        return ResponseEntity.ok(this.pessoaRepository.findByCpf(cpf));
+    @GetMapping("/{cpf}")
+    public ResponseEntity<?> getByIdRequest(@PathVariable("cpf") String cpf) {
+        final Pessoa pessoa = pessoaRepository.findByCpf(cpf);
+        return pessoa == null ? ResponseEntity.badRequest().body("cpf não encontrado") : ResponseEntity.ok(pessoa);
     }
 
 
