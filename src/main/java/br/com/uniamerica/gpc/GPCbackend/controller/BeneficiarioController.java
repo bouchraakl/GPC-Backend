@@ -10,10 +10,12 @@ import br.com.uniamerica.gpc.GPCbackend.repository.BeneficiarioRepository;
 import br.com.uniamerica.gpc.GPCbackend.repository.MovimentacaoRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.BeneficiarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //------------------------------------------------
@@ -38,6 +40,14 @@ public class BeneficiarioController {
     public ResponseEntity<?> findAll(){
         return ResponseEntity.ok(this.beneficiarioRepository.findAll());
     }
+
+    @GetMapping("pdf/dataCriacao/{startDate}/{endDate}")
+    public ResponseEntity<?> getByDataCriacaoPdf(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(beneficiarioRepository.findByDataCriacaoBetweenPdf(startDate,endDate));
+    }
+
 
 
     @GetMapping(value = "/nomes") //O Hibernate alertava caminho ambíguo caso eu deixasse um caminho vazio aqui.

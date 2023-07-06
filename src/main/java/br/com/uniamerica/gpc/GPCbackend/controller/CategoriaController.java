@@ -4,16 +4,20 @@ package br.com.uniamerica.gpc.GPCbackend.controller;
 //------------------Imports----------------------
 
 
+import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Categoria;
 import br.com.uniamerica.gpc.GPCbackend.entity.Endereco;
 import br.com.uniamerica.gpc.GPCbackend.repository.CategoriaRepository;
 import br.com.uniamerica.gpc.GPCbackend.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //------------------------------------------------
@@ -59,6 +63,13 @@ public class CategoriaController {
         return ResponseEntity.ok(categoria);
     }
 
+    @GetMapping("pdf/dataCriacao/{startDate}/{endDate}")
+    public ResponseEntity<?> getByDataCriacaoPdf(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(categoriaRepository.findByDataCriacaoBetweenPdf(startDate,endDate));
+    }
+
     @GetMapping("listaespera")
     public  ResponseEntity<?> getByEspera(@RequestParam("nome")String nome){
 
@@ -83,18 +94,14 @@ public class CategoriaController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editarCategoria(@Validated @RequestBody Categoria categoria, Long Id){
-
-
-        try{
-
-            this.categoriaService.editar(categoria);
-            return ResponseEntity.ok().body("Editado com sucesso!");
-
-        }catch (Exception e){
-
+    public ResponseEntity<?> editarCategoria(
+            @RequestBody @Validated Categoria categotia
+    ) {
+        try {
+            this.categoriaService.editar(categotia);
+            return ResponseEntity.status(HttpStatus.OK).body("Categoria modificada com sucesso.");
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-
         }
     }
 

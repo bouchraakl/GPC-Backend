@@ -84,13 +84,11 @@ public class EnderecoController {
 
 
     @PostMapping
-    public ResponseEntity<?> cadastrarEndereco(@Validated  @RequestBody Endereco endereco){
+    public ResponseEntity<?> cadastrarEndereco(@Validated @RequestBody Endereco endereco){
 
         try{
             final Endereco enderecoBanco = this.enderecoService.cadastrar(endereco);
-
-            return  ResponseEntity.ok("Endereço cadastrado com sucesso");
-
+            return  ResponseEntity.ok(enderecoBanco);
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao cadastrar endereco.");
         }

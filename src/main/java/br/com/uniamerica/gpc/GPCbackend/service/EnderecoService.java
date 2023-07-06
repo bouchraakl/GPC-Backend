@@ -18,25 +18,6 @@ public class EnderecoService {
 
     @Transactional
     public Endereco cadastrar(Endereco endereco){
-
-        Assert.hasText(endereco.getCep(), "Não informado o CEP corretamente");
-        Assert.notNull(endereco.getCep(), "Não informado o CEP");
-
-        Assert.hasText(endereco.getLogradouro(), "Não informado LOGRADOURO corretamente");
-        Assert.notNull(endereco.getLogradouro(), "Não informado LOGRADOURO");
-
-        Assert.hasText(endereco.getBairro(), "NÃO informado BAIRRO corretamente");
-        Assert.notNull(endereco.getBairro(),"NÃO informado BAIRRO");
-
-        Assert.hasText(endereco.getCidade(), "NÃO informado CIDADE corretamente");
-        Assert.notNull(endereco.getCidade(), "NÃO Informado CIDADE");
-
-        Assert.hasText(endereco.getUf(), "NÃO informado UF corretamente");
-        Assert.notNull(endereco.getUf(), "NÃO informado UF");
-
-        Assert.hasText(endereco.getPais(), "NÃO informado PAIS corretamente");
-        Assert.notNull(endereco.getPais(), "NÃO informado PAIS");
-
         return enderecoRepository.save(endereco);
     }
 

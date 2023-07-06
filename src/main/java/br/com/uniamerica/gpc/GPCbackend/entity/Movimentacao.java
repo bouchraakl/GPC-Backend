@@ -23,11 +23,13 @@ import java.time.LocalDate;
 public class Movimentacao extends AbstractEntity {
     @Getter
     @Setter
+    @NotNull(message = "Data de empréstimo deve ser informada!")
     @Column(name = "dt_emprestimo", nullable = false)
     private LocalDate dataEmprestimo;
 
     @Getter
     @Setter
+    @NotNull(message = "Data prevista de devolução deve ser informada!")
     @Column(name = "dt_devolucao", nullable = false)
     private LocalDate dataDevolucao;
 
@@ -38,15 +40,21 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter
     @Setter
-    @NotNull
+    @NotNull(message = "Beneficiário deve ser informado!")
     @ManyToOne
-    @JoinColumn(name = "beneficiario_id", nullable = false)
-    private Beneficiario beneficiario;
+    @JoinColumn(name = "pessoa_id", nullable = false)
+    private Pessoa beneficiario;
+    @Getter
+    @Setter
+    @NotNull(message = "Responsável deve ser informado!")
+    @ManyToOne
+    @JoinColumn(name = "responsavel_id", nullable = false)
+    private Pessoa responsavel;
 
     @Getter
     @Setter
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "Ativo deve ser informado!")
+    @ManyToOne
     @JoinColumn(name = "ativo_id", nullable = false)
     private Ativo ativo;
 

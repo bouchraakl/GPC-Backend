@@ -1,5 +1,6 @@
 //------------------Package----------------------
 package br.com.uniamerica.gpc.GPCbackend.controller;
+
 import br.com.uniamerica.gpc.GPCbackend.entity.Ativo;
 import br.com.uniamerica.gpc.GPCbackend.entity.Condicao;
 import br.com.uniamerica.gpc.GPCbackend.entity.Movimentacao;
@@ -11,12 +12,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -41,6 +45,7 @@ public class AtivoController {
         final Ativo ativo = ativoRepository.findById(id).orElse(null);
         return ativo == null ? ResponseEntity.badRequest().body("ID não encontrado") : ResponseEntity.ok(ativo);
     }
+
     /**
      * Manipula solicitações GET para "/listar" e recupera uma lista de todos os objetos Ativo do repositório.
      *
@@ -51,6 +56,18 @@ public class AtivoController {
     public ResponseEntity<Page<Ativo>> getAllRequest(Pageable pageable) {
         return ResponseEntity.ok(this.ativoService.listAll(pageable));
     }
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(this.ativoRepository.findAll());
+    }
+
+    @GetMapping("pdf/dataCriacao/{startDate}/{endDate}")
+    public ResponseEntity<?> getByDataCriacaoPdf(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(ativoRepository.findByDataCriacaoBetweenPdf(startDate,endDate));
+    }
+
 
     /**
      * Manipula solicitações GET para "/condicao" e recupera uma lista de objetos Ativo com a condição especificada.
@@ -101,6 +118,19 @@ public class AtivoController {
         return ResponseEntity.ok(ativo);
     }
 
+    @GetMapping("/idcategoria")
+    public ResponseEntity<?> getByIdCategoria(@RequestParam("id") Long id) {
+
+        final List<Ativo> ativo = this.ativoRepository.findByCategoriaId(id);
+
+
+        return ativo.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(ativo);
+
+    }
+
+
     /**
      * Manipula solicitações GET para "/categoria" e recupera uma lista de objetos Ativo com o
      * nome da categoria especificada.
@@ -145,13 +175,11 @@ public class AtivoController {
     /**
      * Atualiza um Ativo com o ID especificado.
      *
-     * @param id    O ID do Ativo a ser atualizado.
      * @param ativo O objeto Ativo atualizado.
      * @return Um ResponseEntity contendo uma mensagem de sucesso ou erro.
      */
     @PutMapping
     public ResponseEntity<?> editarAtivo(
-            @RequestParam("id") @Validated final Long id,
             @RequestBody @Validated Ativo ativo
     ) {
         try {
@@ -185,11 +213,11 @@ public class AtivoController {
     @DeleteMapping
     public ResponseEntity<?> deletar(
             @RequestParam("id") final Long id
-    ){
-        try{
-             this.ativoService.validarDeleteAtivo(id);
+    ) {
+        try {
+            this.ativoService.validarDeleteAtivo(id);
             return ResponseEntity.ok(String.format("Ativo [ %s ] desativado!", id));
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

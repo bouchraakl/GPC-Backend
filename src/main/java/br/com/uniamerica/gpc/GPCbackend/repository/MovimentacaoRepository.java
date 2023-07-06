@@ -19,22 +19,22 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
      * @param beneficiarioNome ID do Beneficiario {@link br.com.uniamerica.gpc.GPCbackend.entity.Beneficiario}, para filtrar as Movimentações {@link Movimentacao}
      * @return Lista de movimentações que contêm o beneficiário informado
      */
-    @Query("from Movimentacao where beneficiario.perfil.nome like :beneficiarioNome")
+    @Query("from Movimentacao where beneficiario.nome like :beneficiarioNome")
     public List<Movimentacao> findByBeneficiarioNome(@Param("beneficiarioNome") String beneficiarioNome);
 
     /**
-     * @param categoriaId ID da Categoria {@link br.com.uniamerica.gpc.GPCbackend.entity.Categoria}, para filtrar as Movimentações {@link Movimentacao}
+     * @param id ID da Categoria {@link br.com.uniamerica.gpc.GPCbackend.entity.Categoria}, para filtrar as Movimentações {@link Movimentacao}
      * @return Lista de Movimentações que contêm a categoria informada
      */
-    @Query("from Movimentacao where ativo.categoria.id = :categoriaId")
-    public List<Movimentacao> findByAtivoCategoriaId(@Param("categoriaId") Long categoriaId);
+    @Query("from Movimentacao where ativo.categoria.id = :id")
+    public List<Movimentacao> findByAtivoCategoriaId(@Param("id") Long id);
 
     @Query("from Movimentacao where ativo.categoria = :categoria")
     public List<Movimentacao> findByCategoria(@Param("categoria") String categoria);
 
 
-    @Query("from Movimentacao where ativo.id = :ativoId")
-    public List<Movimentacao> findByAtivoId(@Param("ativoId") Long ativoId);
+    @Query("from Movimentacao where ativo.id = :id")
+    public List<Movimentacao> findByAtivoId(@Param("id") Long id);
 
     @Query("from Movimentacao where ativo.idPatrimonio = :idPatrimonio")
     public List<Movimentacao> findByAtivoPatrimonio(@Param("idPatrimonio") Long idPatrimonio);
@@ -61,4 +61,12 @@ public interface MovimentacaoRepository extends JpaRepository <Movimentacao, Lon
      */
     @Query("from Movimentacao  where isDevolvido = true")
     public List<Movimentacao> findAllAbertas();
+
+    @Query("SELECT m FROM Movimentacao m " +
+            "WHERE m.dataEmprestimo >= :dataEntrada " +
+            "AND m.dataDevolucao <= :dataDevolucao")
+    List<Movimentacao> findMovementsBetweenDates(
+            @Param("dataEntrada") LocalDate dataEntrada,
+            @Param("dataDevolucao") LocalDate dataDevolucao);
+
 }
