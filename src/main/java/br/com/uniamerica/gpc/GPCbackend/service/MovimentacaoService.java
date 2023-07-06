@@ -27,7 +27,7 @@ public class MovimentacaoService {
     @Autowired
     private AtivoRepository ativoRepository;
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public Movimentacao novaMovimentacao(Movimentacao movimentacao){
         Assert.isTrue(movimentacao.getDataDevolucao().isAfter(movimentacao.getDataEmprestimo()), "Data de devolução não pode ser maior que data de empréstimo!");
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,25 +25,6 @@ public class MovimentacaoController {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private MovimentacaoService movimentacaoService;
-
-    @GetMapping(value = "/filtrar")
-    public ResponseEntity<?> filtrarMovimentacoes(
-            @RequestParam(value = "dataEntrada", required = false) LocalDate dataEntrada,
-            @RequestParam(value = "dataDevolucao", required = false) LocalDate dataDevolucao,
-            @RequestParam(value = "beneficiario-id", required = false) Long beneficiarioId,
-            @RequestParam(value = "categoria-id", required = false) Long categoriaId,
-            @RequestParam(value = "ativo-id", required = false) Long ativoId
-    ) {
-        final List<Movimentacao> movimentacoes = movimentacaoRepository.filtrarMovimentacoes(
-                dataEntrada,
-                dataDevolucao,
-                beneficiarioId,
-                categoriaId,
-                ativoId
-        );
-
-        return ResponseEntity.ok(movimentacoes);
-    }
 
     @GetMapping(value = "/listar")
     public ResponseEntity<?> getAll() {
@@ -116,7 +98,7 @@ public class MovimentacaoController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editar(@RequestParam("id") Long id, @RequestBody Movimentacao movimentacao) {
+    public ResponseEntity<?> editar(@RequestParam("id") Long id, @RequestBody @Validated Movimentacao movimentacao) {
         try {
             final Movimentacao movimentacaoBanco = this.movimentacaoService.editar(id, movimentacao);
             return ResponseEntity.ok(String.format("Movimentação [ %s ] atualizada com sucesso!", movimentacaoBanco.getId()));
