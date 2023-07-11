@@ -14,7 +14,7 @@ To fully utilize the LotMaster System, please make sure you have set up and run 
   - [Configuration](#configuration)
   - [Running the Application](#running-the-application)
 - [Project Detailed Documentation](#project-detailed-documentation)
-- - [Contributors](#contributors)
+- [Contributors](#contributors)
 
 ## Features
 
@@ -50,7 +50,7 @@ Follow the instructions below to get the parking management system backend up an
 1. Clone this repository to your local machine using:
 
    ```shell
-   git clone https://github.com/bouchraakl/ParkingManagerBackend.git
+   git clone https://github.com/bouchraakl/GPC-Backend.git
    
 2. Open the project in your Java IDE (e.g., IntelliJ IDEA).
 
@@ -67,7 +67,7 @@ Follow the instructions below to get the parking management system backend up an
 3. Once the application is running, you can test the API endpoints using Postman or any other API testing tool.
 
 ## Project Detailed Documentation
-You can find the detailed project documentation on our wiki : 
+You can find the detailed project documentation on our wiki : [GPC Wiki](https://github.com/grupo09-projeto-integrador/GPC-Backend/wiki)
 
 ## Contributors
 | Role             |Name   | E-mail   |
